@@ -10,10 +10,10 @@
 
 <h1 align="center">
 <sub>
-    <img src=".github/assets/onami_logo.svg" height="36">
+    <img src=".github/assets/jishaku_logo.svg" height="36">
 </sub>
 &nbsp;
-onami
+Onami
 </h1>
 <p align="center">
 <sup>
