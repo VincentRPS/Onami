@@ -45,7 +45,7 @@ except(ModuleNotFoundError):
     print("Onami: disnake not found")
 
 finally:
-    print(f"Onami Has Loaded into build  {build}")
+    print(f"Onami Has Loaded into build {build}")
 
 from onami.features.filesystem import FilesystemFeature
 from onami.features.guild import GuildFeature
