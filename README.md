@@ -1,10 +1,10 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/onami.svg)](https://pypi.python.org/pypi/onami)
 [![License](https://img.shields.io/pypi/l/onami.svg)](https://github.com/Gorialis/onami/blob/master/LICENSE)
 [![Status](https://img.shields.io/pypi/status/onami.svg)](https://pypi.python.org/pypi/onami)
-[![Circle CI](https://img.shields.io/circleci/project/github/Gorialis/onami/master.svg?label=CircleCI)](https://circleci.com/gh/Gorialis/onami)
-[![AppVeyor CI](https://img.shields.io/appveyor/ci/Gorialis/onami.svg?label=AppVeyorCI)](https://ci.appveyor.com/project/Gorialis/onami)
-[![Issues](https://img.shields.io/github/issues/Gorialis/onami.svg?colorB=3333ff)](https://github.com/Gorialis/onami/issues)
-[![Commit activity](https://img.shields.io/github/commit-activity/w/Gorialis/onami.svg)](https://github.com/Gorialis/onami/commits)
+[![Circle CI](https://img.shields.io/circleci/project/github/VincentRPS/onami/master.svg?label=CircleCI)](https://circleci.com/gh/VincentRPS/onami)
+[![AppVeyor CI](https://img.shields.io/appveyor/ci/VincentRPS/onami.svg?label=AppVeyorCI)](https://ci.appveyor.com/project/VincentRPS/onami)
+[![Issues](https://img.shields.io/github/issues/VincentRPS/onami.svg?colorB=3333ff)](https://github.com/VincentRPS/onami/issues)
+[![Commit activity](https://img.shields.io/github/commit-activity/w/VincentRPS/onami.svg)](https://github.com/VincentRPS/onami/commits)
 
 ***
 
