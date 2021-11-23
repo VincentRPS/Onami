@@ -234,11 +234,7 @@ If you'd like to test the latest versions of onami, you can do so by downloading
 
 > From GitHub:
 > ```bash
-> pip install -U "onami @ git+https://github.com/Gorialis/onami@master"
-> ```
-> From GitLab:
-> ```bash
-> pip install -U "onami @ git+https://gitlab.com/Gorialis/onami@master"
+> pip install -U "onami @ git+https://github.com/VincentRPS/onami@master"
 > ```
 
 Please note that the new 2020 dependency resolver now no longer discounts git package sources from reinstall prevention,
@@ -248,11 +244,7 @@ If you run into such a problem, you can force onami to be reinstalled like this:
 
 > From GitHub:
 > ```bash
-> pip install -U --force-reinstall "onami @ git+https://github.com/Gorialis/onami@master"
-> ```
-> From GitLab:
-> ```bash
-> pip install -U --force-reinstall "onami @ git+https://gitlab.com/Gorialis/onami@master"
+> pip install -U --force-reinstall "onami @ git+https://github.com/VincentRPS/onami@master"
 > ```
 
 You **must** have installed onami with one of the commands above before doing this else you will probably end up with a broken installation.
