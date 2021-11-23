@@ -19,11 +19,11 @@
 
 # -- Project information -----------------------------------------------------
 
-from jishaku.meta import __version__
+from onami.meta import __version__
 
-project = 'jishaku'
-copyright = '2021, Gorialis'
-author = 'Gorialis'
+project = 'onami'
+copyright = '2021, Gorialis & 2021-present VincentRPS'
+author = 'VincentRPS'
 
 # The short X.Y version
 version = __version__
@@ -120,7 +120,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'jishakudoc'
+htmlhelp_basename = 'onamidoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -147,7 +147,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'jishaku.tex', 'jishaku Documentation',
+    (master_doc, 'onami.tex', 'onami Documentation',
      'Gorialis', 'manual'),
 ]
 
@@ -157,7 +157,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'jishaku', 'jishaku Documentation',
+    (master_doc, 'onami', 'onami Documentation',
      [author], 1)
 ]
 
@@ -168,8 +168,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'jishaku', 'jishaku Documentation',
-     author, 'jishaku', 'One line description of project.',
+    (master_doc, 'onami', 'onami Documentation',
+     author, 'onami', 'One line description of project.',
      'Miscellaneous'),
 ]
 

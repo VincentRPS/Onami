@@ -126,7 +126,7 @@ setup(
 
     download_url='https://github.com/VincentRPS/Onami/archive/{}.tar.gz'.format(VERSION),
 
-    keywords='jishaku discord.py discord cog repl extension onami',
+    keywords='onami discord.py discord cog repl extension onami',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: AsyncIO',

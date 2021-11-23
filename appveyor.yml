@@ -30,9 +30,9 @@ install:
   - "pip install -U -r requirements/_.txt -r requirements/docs.txt -r requirements/procinfo.txt -r requirements/test.txt -r requirements/voice.txt"
 
 test_script:
-  - "pytest -vs --cov=jishaku --cov-report term-missing:skip-covered"
+  - "pytest -vs --cov=onami --cov-report term-missing:skip-covered"
   - "flake8 ."
-  - "pylint jishaku"
+  - "pylint onami"
   - "isort . --check-only"
 
 after_test:
