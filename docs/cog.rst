@@ -1,32 +1,32 @@
-.. currentmodule:: jishaku
+.. currentmodule:: onami
 
-jishaku as a cog
+onami as a cog
 ================
 
 Custom cogs and the Feature framework
 --------------------------------------
 
-The jishaku cog contains commands for bot management, debugging and experimentation.
+The onami cog contains commands for bot management, debugging and experimentation.
 
 The conventional way to add the cog is by using the module as an extension:
 
 .. code:: python3
 
-    bot.load_extension('jishaku')
+    bot.load_extension('onami')
 
-You could also create your own extension to load the ``Jishaku`` cog, but this is not recommended:
+You could also create your own extension to load the ``onami`` cog, but this is not recommended:
 
 .. code:: python3
 
-    from jishaku.cog import Jishaku
+    from onami.cog import onami
 
     def setup(bot: commands.Bot):
         # I don't recommend doing this!
-        bot.add_cog(Jishaku(bot=bot))
+        bot.add_cog(onami(bot=bot))
 
-If you wish to change or add to the functionality on jishaku for your specific bot, you must use the Features framework to create a new cog.
+If you wish to change or add to the functionality on onami for your specific bot, you must use the Features framework to create a new cog.
 
-The ``Jishaku`` cog is composited from multiple Features that implement various parts of its functionality.
+The ``onami`` cog is composited from multiple Features that implement various parts of its functionality.
 When the cog is instantiated, the inherited Features are used to compile the final command tree.
 
 .. image:: /images/features.png
@@ -37,8 +37,8 @@ Here is an example of a simple custom cog using this setup:
 
     from discord.ext import commands
 
-    from jishaku.features.python import PythonFeature
-    from jishaku.features.root_command import RootCommand
+    from onami.features.python import PythonFeature
+    from onami.features.root_command import RootCommand
 
     class CustomDebugCog(PythonFeature, RootCommand):
         pass
@@ -46,18 +46,18 @@ Here is an example of a simple custom cog using this setup:
     def setup(bot: commands.Bot):
         bot.add_cog(CustomDebugCog(bot=bot))
 
-This example would give you a cog that includes the ``jsk`` command, the core task system, and the Python commands, but nothing else.
+This example would give you a cog that includes the ``oni`` command, the core task system, and the Python commands, but nothing else.
 
 Using this system, you can selectively include or exclude features you want on your custom Cogs.
 
-``STANDARD_FEATURES`` in ``jishaku.cog`` holds all the features that an installation of jishaku is guaranteed to have by default.
+``STANDARD_FEATURES`` in ``onami.cog`` holds all the features that an installation of onami is guaranteed to have by default.
 Thus, you can make a cog without any optional features like so:
 
 .. code:: python3
 
     from discord.ext import commands
 
-    from jishaku.cog import STANDARD_FEATURES
+    from onami.cog import STANDARD_FEATURES
 
     class CustomDebugCog(*STANDARD_FEATURES):
         pass
@@ -66,7 +66,7 @@ Thus, you can make a cog without any optional features like so:
         bot.add_cog(CustomDebugCog(bot=bot))
 
 ``OPTIONAL_FEATURES``, by contrast, contains Features detected to be supported in this environment.
-The content of it may vary depending on what extras have been installed, or what platform jishaku is running on.
+The content of it may vary depending on what extras have been installed, or what platform onami is running on.
 
 To use these features as well, simply add them to your cog:
 
@@ -74,7 +74,7 @@ To use these features as well, simply add them to your cog:
 
     from discord.ext import commands
 
-    from jishaku.cog import STANDARD_FEATURES, OPTIONAL_FEATURES
+    from onami.cog import STANDARD_FEATURES, OPTIONAL_FEATURES
 
     class CustomDebugCog(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
         pass
@@ -82,28 +82,28 @@ To use these features as well, simply add them to your cog:
     def setup(bot: commands.Bot):
         bot.add_cog(CustomDebugCog(bot=bot))
 
-This will give you an almost identical cog to the standard Jishaku.
+This will give you an almost identical cog to the standard onami.
 
 Adding or changing commands
 ----------------------------
 
 If you want to add or change commands in your custom cog, you can use ``Feature.Command``.
 
-This operates in a similar manner to ``commands.command``, but it allows command cross-referencing between different Features, and guarantees individual instances of jishaku cogs will have unique states.
+This operates in a similar manner to ``commands.command``, but it allows command cross-referencing between different Features, and guarantees individual instances of onami cogs will have unique states.
 
 .. code:: python3
 
-    from jishaku.features.baseclass import Feature
+    from onami.features.baseclass import Feature
 
     class CustomDebugCog(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
-        @Feature.Command(parent="jsk", name="foobar")
-        async def jsk_foobar(self, ctx: commands.Context):
+        @Feature.Command(parent="oni", name="foobar")
+        async def oni_foobar(self, ctx: commands.Context):
             await ctx.send("Hello there!")
 
 The ``parent`` argument refers to what command parents this one, and works across Features.
 The name used in it is the **function name of the callback for the command**, not the command's name itself, so please keep this in mind.
 
-If you need to check what the name of a command you want to parent against is, you can use ``jsk source jsk <whatever>``.
+If you need to check what the name of a command you want to parent against is, you can use ``oni source oni <whatever>``.
 
 Commands that have children when the cog is instantiated will be automatically turned into ``Group`` s, and this applies for subcommands of subcommands and etc.
 
@@ -112,26 +112,26 @@ If you want to override existing commands, the process is moreorless the same:
 .. code:: python3
 
     class CustomDebugCog(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
-        @Feature.Command(parent="jsk", name="debug")
-        async def jsk_debug(self, ctx: commands.Context):
+        @Feature.Command(parent="oni", name="debug")
+        async def oni_debug(self, ctx: commands.Context):
             await ctx.send("Not so debuggy any more!")
 
 Like standard inheritance, this requires the **function name to be the same to work properly**, so keep this in mind.
 
-You can even override the jishaku base command using this method:
+You can even override the onami base command using this method:
 
 .. code:: python3
 
     class CustomDebugCog(*OPTIONAL_FEATURES, *STANDARD_FEATURES):
-        @Feature.Command(name="jishaku", aliases=["jsk"], invoke_without_command=True, ignore_extra=False)
-        async def jsk(self, ctx: commands.Context):
+        @Feature.Command(name="onami", aliases=["oni"], invoke_without_command=True, ignore_extra=False)
+        async def oni(self, ctx: commands.Context):
             await ctx.send("I'm walking on a Star!")
 
-Changing who can use jishaku
+Changing who can use onami
 -----------------------------
 
-The ``jishaku`` command group has an owner check applied to it and all subcommands.
-To change who can use jishaku, you must change how the owner is determined in your own Bot:
+The ``onami`` command group has an owner check applied to it and all subcommands.
+To change who can use onami, you must change how the owner is determined in your own Bot:
 
 .. code:: python3
 
@@ -143,9 +143,9 @@ To change who can use jishaku, you must change how the owner is determined in yo
             # Else fall back to the original
             return await super().is_owner(user)
 
-This is the **sole** supported method of changing who can use jishaku.
+This is the **sole** supported method of changing who can use onami.
 
-jishaku is a powerful tool - giving people access to it is equivalent to giving them direct access to your computer - so you should make serious consideration for whether you should be overriding who can use it at all.
+onami is a powerful tool - giving people access to it is equivalent to giving them direct access to your computer - so you should make serious consideration for whether you should be overriding who can use it at all.
 
 Task system
 -----------
@@ -154,14 +154,14 @@ Commands that execute arbitrary code are submitted to a command-task queue so th
 This includes the Python and shell commands.
 
 Please note that this queue is specific to the cog instance.
-If jishaku is reloaded, the command-task queue for the older instance will be lost, even if there are uncancelled command-tasks within it.
+If onami is reloaded, the command-task queue for the older instance will be lost, even if there are uncancelled command-tasks within it.
 This will make it very difficult to cancel those tasks.
 
-.. py:function:: jsk tasks
+.. py:function:: oni tasks
 
     Shows a list of the currently running command-tasks. This includes the index, command qualified name and time invoked.
 
-.. py:function:: jsk cancel <index: int>
+.. py:function:: oni cancel <index: int>
 
     Cancels the command-task at the provided index. If the index is -1, it will cancel the most recent still-running task.
 
@@ -171,17 +171,17 @@ This will make it very difficult to cancel those tasks.
 Python evaluation
 -----------------
 
-.. currentmodule:: jishaku.repl.compilation
+.. currentmodule:: onami.repl.compilation
 
-Python execution and evaluation is facilitated by jishaku's :class:`AsyncCodeExecutor` backend.
+Python execution and evaluation is facilitated by onami's :class:`AsyncCodeExecutor` backend.
 
 Code can be passed in as either a single line or a full codeblock:
 
 .. code:: md
 
-    ?jsk py 3 + 4
+    ?oni py 3 + 4
 
-    ?jsk py ```py
+    ?oni py ```py
     return 3 + 4
     ```
 
@@ -193,14 +193,14 @@ Codeblocks passed support yielding. Yielding allows results to be received durin
 
 .. code:: md
 
-    ?jsk py ```py
+    ?oni py ```py
     for x in range(5):
         yield x
     ```
 
 Yielded results are treated the same as if they were returned.
 
-When using the ``jsk py`` command, there are a set of contextual variables you can use to interact with Discord:
+When using the ``oni py`` command, there are a set of contextual variables you can use to interact with Discord:
 
 +----------------+-----------------------------------------------------------+
 | ``_bot``       |  The :class:`discord.ext.commands.Bot` instance.          |
@@ -226,7 +226,7 @@ Example:
 
 .. code:: md
 
-    ?jsk py ```py
+    ?oni py ```py
     channel = _bot.get_channel(123456789012345678)
 
     await channel.send(_author.avatar_url_as(format='png'))
@@ -234,19 +234,19 @@ Example:
 
 These variables are prefixed with underscores to try and reduce accidental shadowing when writing scripts in REPL.
 
-If you don't want the underscores, you can set ``JISHAKU_NO_UNDERSCORE=true`` in your environment variables.
+If you don't want the underscores, you can set ``onami_NO_UNDERSCORE=true`` in your environment variables.
 
 These variables are bound to the local scope and are actively cleaned from the scope on command exit,
 so they don't persist between REPL sessions.
 
-If you want to change this behavior, you can set ``JISHAKU_RETAIN=true``, or,
-use the ``jsk retain on`` and ``jsk retain off`` commands to toggle variable retention.
+If you want to change this behavior, you can set ``onami_RETAIN=true``, or,
+use the ``oni retain on`` and ``oni retain off`` commands to toggle variable retention.
 
 
 Commands
 ---------
 
-.. py:function:: jsk [python|py] <argument: str>
+.. py:function:: oni [python|py] <argument: str>
 
     |tasked|
 
@@ -264,34 +264,34 @@ Commands
 
     Any other instance is ``repr``'d and sent using the same rules as a string.
 
-.. py:function:: jsk [python_inspect|pythoninspect|pyi] <argument: str>
+.. py:function:: oni [python_inspect|pythoninspect|pyi] <argument: str>
 
     |tasked|
 
     Evaluates Python code, returning an inspection of the results.
 
-    .. currentmodule:: jishaku.paginators
+    .. currentmodule:: onami.paginators
 
     If the inspection fits in a single message, it is sent as a paginator page,
     else it is sent as a :class:`PaginatorInterface`.
 
 
-.. py:function:: jsk [disassemble|dis] <argument: str>
+.. py:function:: oni [disassemble|dis] <argument: str>
 
     Compiles Python code in an asynchronous context, and returns the disassembly.
 
     This operates in a similar manner to :func:`dis.dis`, but in a more accessible form, as it is in an implicit async context and doesn't send to stdout.
 
-    .. currentmodule:: jishaku.paginators
+    .. currentmodule:: onami.paginators
 
     The output is always sent as a :class:`PaginatorInterface`.
 
 
-.. py:function:: jsk retain <toggle: bool>
+.. py:function:: oni retain <toggle: bool>
 
     Toggles whether variables defined in REPL sessions are retained into future sessions. (OFF by default)
 
-    .. currentmodule:: jishaku.repl.scope
+    .. currentmodule:: onami.repl.scope
 
     Toggling this on or off will destroy the current :class:`Scope`.
 
@@ -299,7 +299,7 @@ Commands
     (you cannot concurrently share variables between running REPL sessions).
 
 
-.. py:function:: jsk [shell|sh] <argument: str>
+.. py:function:: oni [shell|sh] <argument: str>
 
     |tasked|
 
@@ -310,7 +310,7 @@ Commands
     If no output is produced by the command for 120 seconds, a :class:`asyncio.TimeoutException` will be raised and the shell process will be terminated.
 
 
-.. py:function:: jsk [load|reload] [extensions...]
+.. py:function:: oni [load|reload] [extensions...]
 
     Loads, or reloads, a number of extensions. Extension names are delimited by spaces.
 
@@ -324,22 +324,22 @@ Commands
     Brace expansion works as well, such as ``foo.bar.cogs.{baz,quux,garply}`` to reload ``foo.bar.cogs.baz``,
     ``foo.bar.cogs.quux``, and ``foo.bar.cogs.garply``.
 
-    ``jsk reload ~`` will reload every extension the bot currently has loaded.
+    ``oni reload ~`` will reload every extension the bot currently has loaded.
 
 
-.. py:function:: jsk unload [extensions...]
+.. py:function:: oni unload [extensions...]
 
     Unloads a number of extensions. Extension names are delimited by spaces.
 
-    Matching rules are the same as ``jsk load``.
+    Matching rules are the same as ``oni load``.
 
-    Running ``jsk unload ~`` will unload every extension on your bot. This includes jishaku, which may leave you unable to maintain your bot
+    Running ``oni unload ~`` will unload every extension on your bot. This includes onami, which may leave you unable to maintain your bot
     until it is restarted. Use with care.
 
     If unloading the extension fails, it will be reported with a traceback.
 
 
-.. py:function:: jsk exec [member_and_or_channel...] <command: str>
+.. py:function:: oni exec [member_and_or_channel...] <command: str>
 
     Runs a command as if it were ran by someone else and/or in a different channel.
 
@@ -350,33 +350,33 @@ Commands
 
     If `exec!` is used instead of `exec`, the command will bypass all checks and cooldowns, directly triggering the callback.
 
-.. py:function:: jsk permtrace <channel> [targets...]
+.. py:function:: oni permtrace <channel> [targets...]
 
     Emulates Discord's permission calculation system to create a breakdown of where certain permissions for a member come from.
 
     Targets can either be a member, or a list of roles (to emulate a member with those roles).
     The command will take into account guild permissions and the overwrites for the roles (and member, if applicable) to produce the resulting effective permissions.
 
-.. py:function:: jsk debug <command: str>
+.. py:function:: oni debug <command: str>
 
-    Runs a command using ``jsk python``-style timing and exception reporting.
+    Runs a command using ``oni python``-style timing and exception reporting.
 
     This allows you to invoke a broken command with this command to get the exception directly without having to read logs.
 
     When the command finishes, the time to run will be reported.
 
-.. py:function:: jsk repeat <times: int> <command: str>
+.. py:function:: oni repeat <times: int> <command: str>
 
     |tasked|
 
     Repeats a command the specified amount of times.
 
     This works like a direct message invocation, so cooldowns *will* be honored.
-    You can use ``jsk repeat . jsk sudo ..`` to bypass cooldowns on each invoke if need be.
+    You can use ``oni repeat . oni sudo ..`` to bypass cooldowns on each invoke if need be.
 
     This command will wait for a previous invocation to finish before moving onto the next one.
 
-.. py:function:: jsk cat <file: str>
+.. py:function:: oni cat <file: str>
 
     Reads out the data from a file, displaying it in a :class:`PaginatorInterface`.
 
@@ -385,9 +385,9 @@ Commands
 
     If the file has an encoding hint, it will be honored when trying to read it.
 
-    It is possible to specify a linespan by typing e.g. ``jsk cat file.py#L5-10``, which will only display lines 5 through 10 inclusive.
+    It is possible to specify a linespan by typing e.g. ``oni cat file.py#L5-10``, which will only display lines 5 through 10 inclusive.
 
-.. py:function:: jsk curl <url: str>
+.. py:function:: oni curl <url: str>
 
     Downloads a file from a URL, displaying the contents in a :class:`PaginatorInterface`.
 
@@ -396,13 +396,13 @@ Commands
 
     If the file has an encoding hint, it will be honored when trying to read it.
 
-.. py:function:: jsk source <command_name: str>
+.. py:function:: oni source <command_name: str>
 
     Shows the source for a command in a :class:`PaginatorInterface`.
 
-    This is similar to doing ``jsk cat`` on the source file, limited to the line span of the command.
+    This is similar to doing ``oni cat`` on the source file, limited to the line span of the command.
 
-.. py:function:: jsk rtt
+.. py:function:: oni rtt
 
     Calculates the round trip time between your bot and the API, using message sends and edits.
     The latency for each pass will be shown, as well as an average and standard deviation.

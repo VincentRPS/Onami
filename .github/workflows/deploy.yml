@@ -37,7 +37,7 @@ jobs:
     - name: Test from local directory
       shell: bash
       run: |
-        PYTHONPATH="$(pwd)" pytest -vs --cov=jishaku --cov-report term-missing:skip-covered
+        PYTHONPATH="$(pwd)" pytest -vs --cov=onami --cov-report term-missing:skip-covered
 
     - name: Lint repository
       shell: bash
@@ -45,7 +45,7 @@ jobs:
         echo "flake8:"
         flake8 .
         echo "pylint:"
-        pylint jishaku
+        pylint onami
         echo "isort:"
         isort . --check-only
 
@@ -54,7 +54,7 @@ jobs:
       run: |
         export tag_name="${GITHUB_REF##*/}"
         python ./setup.py sdist bdist_egg bdist_wheel
-        rm -rf jishaku
+        rm -rf onami
         find dist -name *.whl -exec pip install '{}' +
 
     - name: Test from installed module

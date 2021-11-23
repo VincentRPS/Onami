@@ -8,7 +8,7 @@
             "args": [
                 "-vs",
                 ".",
-                "--cov=jishaku",
+                "--cov=onami",
                 "--cov-report",
                 "term-missing:skip-covered"
             ],

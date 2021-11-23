@@ -13,7 +13,7 @@ div.body p {
 }
 
 h1.logo > a:before {
-  background-image: url('jishaku_logo.svg');
+  background-image: url('onami_logo.svg');
   background-size: 0.7em 0.7em;
   display: inline-block;
   width: 0.7em;

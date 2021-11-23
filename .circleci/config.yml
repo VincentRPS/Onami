@@ -22,12 +22,12 @@ jobs:
       - run:
           name: run tests
           command: |
-            PYTHONPATH="$(pwd)" pytest -vs --cov=jishaku --cov-report term-missing:skip-covered
+            PYTHONPATH="$(pwd)" pytest -vs --cov=onami --cov-report term-missing:skip-covered
             flake8 .
-            pylint -j "$(nproc)" jishaku
+            pylint -j "$(nproc)" onami
             isort . --check-only
             python ./setup.py sdist bdist_egg bdist_wheel
-            rm -rf jishaku
+            rm -rf onami
             find dist -name *.whl -exec pip install '{}' +
             PYTHONPATH="$(pwd)" pytest -vs
 
@@ -63,12 +63,12 @@ jobs:
       - run:
           name: run tests
           command: |
-            PYTHONPATH="$(pwd)" pytest -vs --cov=jishaku --cov-report term-missing:skip-covered
+            PYTHONPATH="$(pwd)" pytest -vs --cov=onami --cov-report term-missing:skip-covered
             flake8 .
-            pylint -j "$(nproc)" jishaku
+            pylint -j "$(nproc)" onami
             isort . --check-only
             python ./setup.py sdist bdist_egg bdist_wheel
-            rm -rf jishaku
+            rm -rf onami
             find dist -name *.whl -exec pip install '{}' +
             PYTHONPATH="$(pwd)" pytest -vs
 
@@ -104,12 +104,12 @@ jobs:
       - run:
           name: run tests
           command: |
-            PYTHONPATH="$(pwd)" pytest -vs --cov=jishaku --cov-report term-missing:skip-covered
+            PYTHONPATH="$(pwd)" pytest -vs --cov=onami --cov-report term-missing:skip-covered
             flake8 .
-            pylint -j "$(nproc)" jishaku
+            pylint -j "$(nproc)" onami
             isort . --check-only
             python ./setup.py sdist bdist_egg bdist_wheel
-            rm -rf jishaku
+            rm -rf onami
             find dist -name *.whl -exec pip install '{}' +
             PYTHONPATH="$(pwd)" pytest -vs
 
@@ -145,12 +145,12 @@ jobs:
       - run:
           name: run tests
           command: |
-            PYTHONPATH="$(pwd)" pytest -vs --cov=jishaku --cov-report term-missing:skip-covered
+            PYTHONPATH="$(pwd)" pytest -vs --cov=onami --cov-report term-missing:skip-covered
             flake8 .
-            pylint -j "$(nproc)" jishaku
+            pylint -j "$(nproc)" onami
             isort . --check-only
             python ./setup.py sdist bdist_egg bdist_wheel
-            rm -rf jishaku
+            rm -rf onami
             find dist -name *.whl -exec pip install '{}' +
             PYTHONPATH="$(pwd)" pytest -vs
 

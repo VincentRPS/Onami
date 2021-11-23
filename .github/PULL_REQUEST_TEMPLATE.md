@@ -10,7 +10,7 @@
 
 <!-- To check a box, place an x in the box (with no spaces), like so: [x] -->
 
-- [ ] This PR changes the jishaku module/cog codebase
+- [ ] This PR changes the onami module/cog codebase
     - [ ] These changes add new functionality to the module/cog
     - [ ] These changes fix an issue or bug in the module/cog
     - [ ] I have tested that these changes work on a production bot codebase
