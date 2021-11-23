@@ -5,8 +5,8 @@ formats: []
 build:
   image: latest
 
-requirements_file: .readthedocs/requirements.txt
+requirements_file: requirements/_.txt
 
 python:
-  version: '3.8'
+  version: "3.8"
   setup_py_install: true
