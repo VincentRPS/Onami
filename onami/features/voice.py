@@ -33,7 +33,7 @@ class VoiceFeature(Feature):
         """
 
         if not discord.voice_client.has_nacl:
-            return await ctx.send("Voice cannot be used because PyNaCl is not loaded.")
+            return await ctx.send("No voice support detected, Please install PyNaCl by using `pip install PyNaCl`")
 
         if not discord.opus.is_loaded():
             if hasattr(discord.opus, '_load_default'):
