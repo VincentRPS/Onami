@@ -28,8 +28,8 @@ async def _repl_coroutine({{0}}):
     from importlib import import_module as {import_expression.constants.IMPORTER}
 
     import aiohttp
-    import discord
-    from discord.ext import commands
+    import nextcord
+    from nextcord.ext import commands
 
     try:
         import onami

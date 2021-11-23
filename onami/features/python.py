@@ -13,8 +13,8 @@ The onami Python evaluation/execution commands.
 
 import io
 
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 from onami.codeblocks import codeblock_converter
 from onami.exception_handling import ReplResponseReactor
@@ -84,13 +84,13 @@ class PythonFeature(Feature):
         What you return is what gets stored in the temporary _ variable.
         """
 
-        if isinstance(result, discord.Message):
+        if isinstance(result, nextcord.Message):
             return await ctx.send(f"<Message <{result.jump_url}>>")
 
-        if isinstance(result, discord.File):
+        if isinstance(result, nextcord.File):
             return await ctx.send(file=result)
 
-        if isinstance(result, discord.Embed):
+        if isinstance(result, nextcord.Embed):
             return await ctx.send(embed=result)
 
         if isinstance(result, PaginatorInterface):
@@ -108,12 +108,12 @@ class PythonFeature(Feature):
             return await ctx.send(result.replace(self.bot.http.token, "[token omitted]"))
 
         if use_file_check(ctx, len(result)):  # File "full content" preview limit
-            # Discord's desktop and web client now supports an interactive file content
+            # nextcord's desktop and web client now supports an interactive file content
             #  display for files encoded in UTF-8.
             # Since this avoids escape issues and is more intuitive than pagination for
             #  long results, it will now be prioritized over PaginatorInterface if the
             #  resultant content is below the filesize threshold
-            return await ctx.send(file=discord.File(
+            return await ctx.send(file=nextcord.File(
                 filename="output.py",
                 fp=io.BytesIO(result.encode('utf-8'))
             ))
@@ -184,7 +184,7 @@ class PythonFeature(Feature):
                         text = "\n".join(lines)
 
                         if use_file_check(ctx, len(text)):  # File "full content" preview limit
-                            send(await ctx.send(file=discord.File(
+                            send(await ctx.send(file=nextcord.File(
                                 filename="inspection.prolog",
                                 fp=io.BytesIO(text.encode('utf-8'))
                             )))
@@ -210,7 +210,7 @@ class PythonFeature(Feature):
             text = "\n".join(disassemble(argument.content, arg_dict=arg_dict))
 
             if use_file_check(ctx, len(text)):  # File "full content" preview limit
-                await ctx.send(file=discord.File(
+                await ctx.send(file=nextcord.File(
                     filename="dis.py",
                     fp=io.BytesIO(text.encode('utf-8'))
                 ))

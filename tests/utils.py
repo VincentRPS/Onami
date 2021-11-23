@@ -16,7 +16,7 @@ import random
 from unittest import mock
 from unittest.mock import patch
 
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 def run_async(func):

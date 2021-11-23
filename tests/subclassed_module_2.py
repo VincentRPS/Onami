@@ -4,7 +4,7 @@
 jishaku subclassing test 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a valid extension file for discord.py intended to
+This is a valid extension file for nextcord intended to
 discover weird behaviors related to subclassing.
 
 This variant overrides behavior directly.
@@ -14,7 +14,7 @@ This variant overrides behavior directly.
 
 """
 
-from discord.ext import commands
+from nextcord.ext import commands
 
 import jishaku
 

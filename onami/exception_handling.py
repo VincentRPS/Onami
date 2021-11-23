@@ -20,7 +20,7 @@ import typing
 import nextcord 
 from nextcord.ext import commands
 
-async def send_traceback(destination: discord.abc.Messageable, verbosity: int, *exc_info):
+async def send_traceback(destination: nextcord.abc.Messageable, verbosity: int, *exc_info):
     """
     Sends a traceback of an exception to a destination.
     Used when REPL fails for any reason.
@@ -65,18 +65,18 @@ async def do_after_sleep(delay: float, coro, *args, **kwargs):
     return await coro(*args, **kwargs)
 
 
-async def attempt_add_reaction(msg: discord.Message, reaction: typing.Union[str, discord.Emoji])\
-        -> typing.Optional[discord.Reaction]:
+async def attempt_add_reaction(msg: nextcord.Message, reaction: typing.Union[str, nextcord.Emoji])\
+        -> typing.Optional[nextcord.Reaction]:
     """
     Try to add a reaction to a message, ignoring it if it fails for any reason.
 
     :param msg: The message to add the reaction to.
-    :param reaction: The reaction emoji, could be a string or `discord.Emoji`
-    :return: A `discord.Reaction` or None, depending on if it failed or not.
+    :param reaction: The reaction emoji, could be a string or `nextcord.Emoji`
+    :return: A `nextcord.Reaction` or None, depending on if it failed or not.
     """
     try:
         return await msg.add_reaction(reaction)
-    except discord.HTTPException:
+    except nextcord.HTTPException:
         pass
 
 
@@ -86,7 +86,7 @@ class ReactionProcedureTimer:  # pylint: disable=too-few-public-methods
     """
     __slots__ = ('message', 'loop', 'handle', 'raised')
 
-    def __init__(self, message: discord.Message, loop: typing.Optional[asyncio.BaseEventLoop] = None):
+    def __init__(self, message: nextcord.Message, loop: typing.Optional[asyncio.BaseEventLoop] = None):
         self.message = message
         self.loop = loop or asyncio.get_event_loop()
         self.handle = None

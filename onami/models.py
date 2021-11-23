@@ -4,7 +4,7 @@
 onami.models
 ~~~~~~~~~~~~~~
 
-Functions for modifying or interfacing with discord.py models.
+Functions for modifying or interfacing with nextcord models.
 
 :copyright: (c) 2021 Devon (Gorialis) R
 :license: MIT, see LICENSE for more details.
@@ -13,18 +13,8 @@ Functions for modifying or interfacing with discord.py models.
 
 import copy
 
-try:
-    import nextcord as discord
-    from nextcord.ext import commands
-    try:
-        import disnake as discord
-        from disnake.ext import commands
-
-    except(ModuleNotFoundError):
-        import discord
-        from discord.ext import commands
-except:
-    pass
+import nextcord as nextcord
+from nextcord.ext import commands
 
 
 async def copy_context_with(ctx: commands.Context, *, author=None, channel=None, **kwargs):
@@ -33,7 +23,7 @@ async def copy_context_with(ctx: commands.Context, *, author=None, channel=None,
     """
 
     # copy the message and update the attributes
-    alt_message: discord.Message = copy.copy(ctx.message)
+    alt_message: nextcord.Message = copy.copy(ctx.message)
     alt_message._update(kwargs)  # pylint: disable=protected-access
 
     if author is not None:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-onami.paginators (shim for discord.py 2.0.0)
+onami.paginators (shim for nextcord 2.0.0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Paginator-related tools and interfaces for onami.
@@ -13,9 +13,9 @@ Paginator-related tools and interfaces for onami.
 
 import asyncio
 
-import discord
-from discord import ui
-from discord.ext import commands
+import nextcord
+from nextcord import ui
+from nextcord.ext import commands
 
 from onami.shim.paginator_base import EMOJI_DEFAULT
 
@@ -30,7 +30,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
 
     .. code:: python3
 
-        from discord.ext import commands
+        from nextcord.ext import commands
 
         from onami.paginators import PaginatorInterface
 
@@ -145,7 +145,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         """
         A property that returns the kwargs forwarded to send/edit when updating the page.
 
-        As this must be compatible with both `discord.TextChannel.send` and `discord.Message.edit`,
+        As this must be compatible with both `nextcord.TextChannel.send` and `nextcord.Message.edit`,
         it should be a dict containing 'content', 'embed' or both.
         """
 
@@ -185,7 +185,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         # Unconditionally set send lock to try and guarantee page updates on unfocused pages
         self.send_lock.set()
 
-    async def send_to(self, destination: discord.abc.Messageable):
+    async def send_to(self, destination: nextcord.abc.Messageable):
         """
         Sends a message to the given destination with this interface.
 
@@ -237,7 +237,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
 
                 try:
                     await self.message.edit(**self.send_kwargs)
-                except discord.NotFound:
+                except nextcord.NotFound:
                     # something terrible has happened
                     return
 
@@ -257,51 +257,51 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
             else:
                 await self.message.edit(view=None)
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, interaction: nextcord.Interaction):
         """Check that determines whether this interaction should be honored"""
         return not self.owner or interaction.user.id == self.owner.id
 
-    @ui.button(label="1 \u200b \N{BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}", style=discord.ButtonStyle.secondary)
-    async def button_start(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="1 \u200b \N{BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}", style=nextcord.ButtonStyle.secondary)
+    async def button_start(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to send interface to first page"""
 
         self._display_page = 0
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK LEFT-POINTING TRIANGLE}", style=discord.ButtonStyle.secondary)
-    async def button_previous(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="\N{BLACK LEFT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary)
+    async def button_previous(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to send interface to previous page"""
 
         self._display_page -= 1
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="1", style=discord.ButtonStyle.primary)
-    async def button_current(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="1", style=nextcord.ButtonStyle.primary)
+    async def button_current(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to refresh the interface"""
 
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK RIGHT-POINTING TRIANGLE}", style=discord.ButtonStyle.secondary)
-    async def button_next(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="\N{BLACK RIGHT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary)
+    async def button_next(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to send interface to next page"""
 
         self._display_page += 1
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR} \u200b 1", style=discord.ButtonStyle.secondary)
-    async def button_last(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR} \u200b 1", style=nextcord.ButtonStyle.secondary)
+    async def button_last(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to send interface to last page"""
 
         self._display_page = self.page_count - 1
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK SQUARE FOR STOP} \u200b Close paginator", style=discord.ButtonStyle.danger)
-    async def button_close(self, button: ui.Button, interaction: discord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(label="\N{BLACK SQUARE FOR STOP} \u200b Close paginator", style=nextcord.ButtonStyle.danger)
+    async def button_close(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
         """Button to close the interface"""
 
         message = self.message
@@ -317,7 +317,7 @@ class PaginatorEmbedInterface(PaginatorInterface):
     """
 
     def __init__(self, *args, **kwargs):
-        self._embed = kwargs.pop('embed', None) or discord.Embed()
+        self._embed = kwargs.pop('embed', None) or nextcord.Embed()
         super().__init__(*args, **kwargs)
 
     @property

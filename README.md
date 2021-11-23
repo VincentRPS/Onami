@@ -15,7 +15,7 @@ Onami
 </h1>
 <p align="center">
 <sup>
-a debugging and utility extension for discord.py bots
+a debugging and utility extension for nextcord bots
 </sup>
 <br>
 <sup>
@@ -28,7 +28,7 @@ a debugging and utility extension for discord.py bots
 
 # Fork
 
-Onami is a actively maintained fork of Jishaku for **Every Fork** of discord.py
+Onami is a actively maintained fork of Jishaku for **Every Fork** of nextcord
 
 
 onami is an extension for bot developers that enables rapid prototyping, experimentation, and debugging of features for bots.
@@ -92,25 +92,25 @@ You can also import the module to use the command development utilities.
                 <tr>
                     <td><code>_ctx</code></td>
                     <td>
-                        The <a href="https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context">Context</a> that invoked the command.
+                        The <a href="https://nextcordpy.readthedocs.io/en/latest/ext/commands/api.html#nextcord.ext.commands.Context">Context</a> that invoked the command.
                     </td>
                 </tr>
                 <tr>
                     <td><code>_bot</code></td>
                     <td>
-                        The running <a href="https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Bot">Bot</a> instance.
+                        The running <a href="https://nextcordpy.readthedocs.io/en/latest/ext/commands/api.html#nextcord.ext.commands.Bot">Bot</a> instance.
                     </td>
                 </tr>
                 <tr>
                     <td><code>_author</code><br><code>_channel</code><br><code>_guild</code><br><code>_message</code><br><code>_msg</code></td>
                     <td>
-                        Shortcuts for attributes on <a href="https://discordpy.readthedocs.io/en/latest/ext/commands/api.html#discord.ext.commands.Context"><code>_ctx</code></a>.
+                        Shortcuts for attributes on <a href="https://nextcordpy.readthedocs.io/en/latest/ext/commands/api.html#nextcord.ext.commands.Context"><code>_ctx</code></a>.
                     </td>
                 </tr>
                 <tr>
                     <td><code>_find</code><br><code>_get</code></td>
                     <td>
-                        Shortcuts for <a href="https://discordpy.readthedocs.io/en/latest/api.html#utility-functions"><code>discord.utils</code></a> functions.
+                        Shortcuts for <a href="https://nextcordpy.readthedocs.io/en/latest/api.html#utility-functions"><code>nextcord.utils</code></a> functions.
                     </td>
                 </tr>
             </table>

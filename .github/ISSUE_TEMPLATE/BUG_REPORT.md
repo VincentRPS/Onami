@@ -23,13 +23,13 @@ about: Report broken or incorrect behavior or functionality
 
 <!-- To check a box, place an x in the box (with no spaces), like so: [x] -->
 
-- [ ] I have updated discord.py and onami to the latest available versions and have confirmed that this issue is still present
+- [ ] I have updated nextcord and onami to the latest available versions and have confirmed that this issue is still present
 - [ ] I have searched the open issues for duplicates
 - [ ] I have shown the entire traceback, if possible
 - [ ] I have removed my token from display, if visible
 
 ## System information
 
-<!-- Post information both about your onami AND discord.py version here -->
-<!-- You can get information about discord.py by running `python -m discord -v` -->
+<!-- Post information both about your onami AND nextcord version here -->
+<!-- You can get information about nextcord by running `python -m nextcord -v` -->
 <!-- You can get your onami version by running `pip show onami` -->

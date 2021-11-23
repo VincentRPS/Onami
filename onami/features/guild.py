@@ -13,8 +13,8 @@ The onami guild-related commands.
 
 import typing
 
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 from onami.features.baseclass import Feature
 
@@ -31,8 +31,8 @@ class GuildFeature(Feature):
         based on an allow and deny mask.
         """
 
-        allow: discord.Permissions = discord.Permissions(allow)
-        deny: discord.Permissions = discord.Permissions(deny)
+        allow: nextcord.Permissions = nextcord.Permissions(allow)
+        deny: nextcord.Permissions = nextcord.Permissions(deny)
 
         # Denies first..
         for key, value in dict(deny).items():
@@ -60,21 +60,21 @@ class GuildFeature(Feature):
     @Feature.Command(parent="oni", name="permtrace")
     async def oni_permtrace(
         self, ctx: commands.Context,
-        channel: typing.Union[discord.TextChannel, discord.VoiceChannel],
-        *targets: typing.Union[discord.Member, discord.Role]
+        channel: typing.Union[nextcord.TextChannel, nextcord.VoiceChannel],
+        *targets: typing.Union[nextcord.Member, nextcord.Role]
     ):  # pylint: disable=too-many-locals, too-many-branches, too-many-statements
         """
         Calculates the source of granted or rejected permissions.
 
         This accepts a channel, and either a member or a list of roles.
-        It calculates permissions the same way Discord does, while keeping track of the source.
+        It calculates permissions the same way nextcord does, while keeping track of the source.
         """
 
-        member_ids = {target.id: target for target in targets if isinstance(target, discord.Member)}
+        member_ids = {target.id: target for target in targets if isinstance(target, nextcord.Member)}
         roles = []
 
         for target in targets:
-            if isinstance(target, discord.Member):
+            if isinstance(target, nextcord.Member):
                 roles.extend(list(target.roles))
             else:
                 roles.append(target)
@@ -88,7 +88,7 @@ class GuildFeature(Feature):
 
         if member_ids and channel.guild.owner_id in member_ids:
             # Is owner, has all perms
-            for key in dict(discord.Permissions.all()).keys():
+            for key in dict(nextcord.Permissions.all()).keys():
                 permissions[key] = (True, f"<@{channel.guild.owner_id}> owns the server")
         else:
             # Otherwise, either not a member or not the guild owner, calculate perms manually
@@ -109,7 +109,7 @@ class GuildFeature(Feature):
                 if role.permissions.administrator:
                     is_administrator = True
 
-                    for key in dict(discord.Permissions.all()).keys():
+                    for key in dict(nextcord.Permissions.all()).keys():
                         if not permissions[key][0]:
                             permissions[key] = (True, f"it is granted by Administrator on the server-wide {role.name} permission")
 
@@ -132,8 +132,8 @@ class GuildFeature(Feature):
 
                 role_lookup = {r.id: r for r in roles}
 
-                is_role = lambda o: o.is_role() if discord.version_info >= (2, 0, 0) else o.type == 'role'  # noqa: E731
-                is_member = lambda o: o.is_member() if discord.version_info >= (2, 0, 0) else o.type == 'member'  # noqa: E731
+                is_role = lambda o: o.is_role() if nextcord.version_info >= (2, 0, 0) else o.type == 'role'  # noqa: E731
+                is_member = lambda o: o.is_member() if nextcord.version_info >= (2, 0, 0) else o.type == 'member'  # noqa: E731
 
                 # Denies are applied BEFORE allows, always
                 # Handle denies
@@ -162,7 +162,7 @@ class GuildFeature(Feature):
             "There may be other reasons that persist these permissions even if you change the things displayed."
         )
 
-        embed = discord.Embed(color=0x00FF00, description=description)
+        embed = nextcord.Embed(color=0x00FF00, description=description)
 
         allows = []
         denies = []

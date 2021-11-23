@@ -11,7 +11,7 @@ The onami shell commands.
 
 """
 
-from discord.ext import commands
+from nextcord.ext import commands
 
 from onami.codeblocks import Codeblock, codeblock_converter
 from onami.exception_handling import ReplResponseReactor

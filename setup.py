@@ -105,7 +105,7 @@ setup(
     url='https://github.com/VincentRPS/Onami',
 
     license='MIT',
-    description='A pythonic discord extension including useful tools for bot development and debugging.',
+    description='A pythonic nextcord extension including useful tools for bot development and debugging.',
     long_description=README,
     long_description_content_type='text/markdown',
     project_urls={
@@ -126,7 +126,7 @@ setup(
 
     download_url='https://github.com/VincentRPS/Onami/archive/{}.tar.gz'.format(VERSION),
 
-    keywords='onami discord.py discord cog repl extension onami',
+    keywords='onami nextcord nextcord cog repl extension onami',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: AsyncIO',

@@ -117,7 +117,7 @@ class Flags(metaclass=FlagMeta):  # pylint: disable=too-few-public-methods
     # It is recommended that you set this programatically.
     SCOPE_PREFIX: str = lambda flags: '' if flags.NO_UNDERSCORE else '_'
 
-    # Flag to indicate whether to always use paginators over relying on Discord's file preview
+    # Flag to indicate whether to always use paginators over relying on nextcord's file preview
     FORCE_PAGINATOR: bool
 
     # Flag to indicate verbose error tracebacks should be sent to the invoking channel as opposed to via direct message.

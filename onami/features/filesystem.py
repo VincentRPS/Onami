@@ -17,8 +17,8 @@ import pathlib
 import re
 
 import aiohttp
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 from onami.exception_handling import ReplResponseReactor
 from onami.features.baseclass import Feature
@@ -74,12 +74,12 @@ class FilesystemFeature(Feature):
 
                         lines = content.split('\n')[line_span[0] - 1:line_span[1]]
 
-                        await ctx.send(file=discord.File(
+                        await ctx.send(file=nextcord.File(
                             filename=pathlib.Path(file.name).name,
                             fp=io.BytesIO('\n'.join(lines).encode('utf-8'))
                         ))
                     else:
-                        await ctx.send(file=discord.File(
+                        await ctx.send(file=nextcord.File(
                             filename=pathlib.Path(file.name).name,
                             fp=file
                         ))
@@ -126,7 +126,7 @@ class FilesystemFeature(Feature):
                     if language:
                         break
 
-                await ctx.send(file=discord.File(
+                await ctx.send(file=nextcord.File(
                     filename=f"response.{language or 'txt'}",
                     fp=io.BytesIO(data)
                 ))

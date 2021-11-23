@@ -18,17 +18,17 @@ This is a patch release to fix a number of issues with permtrace and improve ``_
 Version 2.3.0
 -------------
 
-As discord.py development has ceased, this update serves to set the expectations for onami going forward.
+As nextcord development has ceased, this update serves to set the expectations for onami going forward.
 
 I have already gone over everything in my README writeup, so I will reproduce it here for your convenience.
 
-    As of the 27th of August 2021, `discord.py has ceased development <https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1>`_.
+    As of the 27th of August 2021, `nextcord has ceased development <https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1>`_.
 
     onami will continue to be maintained targeting Any fork possible
 
     As all trusted contributors have rejected continuing the library, I do not have enough trust in any forks to target those instead. The existing forks are handled by inexperienced developers, and I figure this will continue to be the case in the future, as all of the developers experienced enough to carry the torch do not want to maintain the library for similar reasons to Danny himself.
 
-    However, if you personally decide that you wish to use a fork, I will allow onami to honor your decision by removing the ``discord.py`` package requirement. **This means, from now on, installing onami will not automatically handle installing discord.py, you must choose a version to use yourself**. Any fork that you use must be compatible with the original (in that it supplies the ``discord`` module and its namespaces).
+    However, if you personally decide that you wish to use a fork, I will allow onami to honor your decision by removing the ``nextcord`` package requirement. **This means, from now on, installing onami will not automatically handle installing nextcord, you must choose a version to use yourself**. Any fork that you use must be compatible with the original (in that it supplies the ``nextcord`` module and its namespaces).
 
     When April 2022 comes, I will make a decision at the time as to whether I want to continue maintaining onami. I still enjoy making and maintaining bots, but implementing onami under the philosophies I have defined so far will likely be impossible under the new slash commands, and I don't really want to compromise my work for the sake of appeasing a company that doesn't care for its developers.
 
@@ -40,7 +40,7 @@ Version 2.2.0
 
 The ``oni sudo``, ``oni su`` and ``oni in`` commands have been removed and replaced with a single command that handles all three at once.
 
-``oni exec`` now automatically handles IDs or mentions for channels, users, or threads (only with discord v2.0a+).
+``oni exec`` now automatically handles IDs or mentions for channels, users, or threads (only with nextcord v2.0a+).
 Aliases with a postfix ``!`` bypass checks and cooldowns, like ``oni sudo`` used to do.
 
 Example of how the commands change with this release:
@@ -77,13 +77,13 @@ Some regressions have been fixed and other internal cleanup has been addressed i
 Version 2.1.0
 -------------
 
-A new implementation of PaginatorInterface has been created using Discord's interaction buttons system.
-It is available when using discord.py 2.0.0 or greater (currently alpha).
+A new implementation of PaginatorInterface has been created using nextcord's interaction buttons system.
+It is available when using nextcord 2.0.0 or greater (currently alpha).
 
 onami will now avoid uploading files either when detecting the author is on mobile or through an explicit ``onami_FORCE_PAGINATOR`` switch.
 This is to better support mobile platforms that do not have inline file previews yet. (`PR #111 <https://github.com/Gorialis/onami/pull/111>`_).
 
-Humanize has been removed as a dependency. Selftest now uses Discord's own relative timestamp formatting markdown extension for timing,
+Humanize has been removed as a dependency. Selftest now uses nextcord's own relative timestamp formatting markdown extension for timing,
 and pretty printing of memory usage has been implemented within the Feature itself.
 
 Version 2.0.0
@@ -98,7 +98,7 @@ New commands
 ~~~~~~~~~~~~~
 
 - ``oni rtt``
-    Calculates the round-trip time between your bot and the Discord API.
+    Calculates the round-trip time between your bot and the nextcord API.
     Reports exact values as well as an average and standard deviation.
 
 - ``oni dis``
@@ -119,7 +119,7 @@ Command improvements
 - ``oni py`` / ``oni pyi``
     Exceptions now display the line from which they originate, instead of just the line number.
 
-    Large results that fit within the Discord preview threshold are now uploaded as files,
+    Large results that fit within the nextcord preview threshold are now uploaded as files,
     for better navigability.
 
 - ``oni sh``
@@ -130,7 +130,7 @@ Command improvements
 - ``oni source``
     Triple backticks inside of source files no longer cause the file content to spill outside of its codeblock.
 
-    Large results that fit within the Discord preview threshold are now uploaded as files,
+    Large results that fit within the nextcord preview threshold are now uploaded as files,
     for better navigability.
 
 - ``oni vc``

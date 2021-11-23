@@ -13,10 +13,10 @@ import asyncio
 import inspect
 from io import BytesIO
 
-import discord
+import nextcord
 import pytest
 import utils
-from discord.ext import commands
+from nextcord.ext import commands
 
 from jishaku.paginators import FilePaginator, PaginatorEmbedInterface, PaginatorInterface, WrappedPaginator
 
@@ -77,7 +77,7 @@ def test_wrapped_paginator():
 
 
 @pytest.mark.skipif(
-    discord.version_info >= (2, 0, 0),
+    nextcord.version_info >= (2, 0, 0),
     reason="Tests with the reaction model of the paginator interface"
 )
 @utils.run_async
@@ -138,7 +138,7 @@ async def test_paginator_interface_reactions():
 
     embed = send_kwargs['embed']
 
-    assert isinstance(embed, discord.Embed)
+    assert isinstance(embed, nextcord.Embed)
 
     description = embed.description
 
@@ -182,16 +182,16 @@ async def test_paginator_interface_reactions():
         }
 
         # push right button
-        emoji = discord.PartialEmoji(
+        emoji = nextcord.PartialEmoji(
             animated=False,
             name="\N{BLACK RIGHT-POINTING TRIANGLE}",
             id=None
         )
         bot.dispatch(
             'raw_reaction_add',
-            discord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
-            if discord.version_info >= (1, 3) else
-            discord.RawReactionActionEvent(payload, emoji)
+            nextcord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
+            if nextcord.version_info >= (1, 3) else
+            nextcord.RawReactionActionEvent(payload, emoji)
         )
 
         await asyncio.sleep(0.1)
@@ -202,16 +202,16 @@ async def test_paginator_interface_reactions():
         current_page = interface.display_page
 
         # push left button
-        emoji = discord.PartialEmoji(
+        emoji = nextcord.PartialEmoji(
             animated=False,
             name="\N{BLACK LEFT-POINTING TRIANGLE}",
             id=None
         )
         bot.dispatch(
             'raw_reaction_add',
-            discord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
-            if discord.version_info >= (1, 3) else
-            discord.RawReactionActionEvent(payload, emoji)
+            nextcord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
+            if nextcord.version_info >= (1, 3) else
+            nextcord.RawReactionActionEvent(payload, emoji)
         )
 
         await asyncio.sleep(0.1)
@@ -220,16 +220,16 @@ async def test_paginator_interface_reactions():
         assert not interface.closed
 
         # push last page button
-        emoji = discord.PartialEmoji(
+        emoji = nextcord.PartialEmoji(
             animated=False,
             name="\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}",
             id=None
         )
         bot.dispatch(
             'raw_reaction_add',
-            discord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
-            if discord.version_info >= (1, 3) else
-            discord.RawReactionActionEvent(payload, emoji)
+            nextcord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
+            if nextcord.version_info >= (1, 3) else
+            nextcord.RawReactionActionEvent(payload, emoji)
         )
 
         await asyncio.sleep(0.1)
@@ -238,16 +238,16 @@ async def test_paginator_interface_reactions():
         assert not interface.closed
 
         # push first page button
-        emoji = discord.PartialEmoji(
+        emoji = nextcord.PartialEmoji(
             animated=False,
             name="\N{BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}",
             id=None
         )
         bot.dispatch(
             'raw_reaction_add',
-            discord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
-            if discord.version_info >= (1, 3) else
-            discord.RawReactionActionEvent(payload, emoji)
+            nextcord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
+            if nextcord.version_info >= (1, 3) else
+            nextcord.RawReactionActionEvent(payload, emoji)
         )
 
         await asyncio.sleep(0.1)
@@ -256,16 +256,16 @@ async def test_paginator_interface_reactions():
         assert not interface.closed
 
         # push close button
-        emoji = discord.PartialEmoji(
+        emoji = nextcord.PartialEmoji(
             animated=False,
             name="\N{BLACK SQUARE FOR STOP}",
             id=None
         )
         bot.dispatch(
             'raw_reaction_add',
-            discord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
-            if discord.version_info >= (1, 3) else
-            discord.RawReactionActionEvent(payload, emoji)
+            nextcord.RawReactionActionEvent(payload, emoji, 'REACTION_ADD')
+            if nextcord.version_info >= (1, 3) else
+            nextcord.RawReactionActionEvent(payload, emoji)
         )
 
         await asyncio.sleep(0.1)

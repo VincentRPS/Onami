@@ -11,25 +11,16 @@ Paginator-related tools and interfaces for onami.
 
 """
 
-try:
-    import nextcord as discord
-    from nextcord.ext import commands
-    try:
-        import disnake as discord
-        from disnake.ext import commands
 
-    except(ModuleNotFoundError):
-        import discord
-        from discord.ext import commands
-except:
-    pass
+import nextcord as nextcord
+from nextcord.ext import commands
 
 from onami.flags import Flags
 from onami.hljs import get_language, guess_file_traits
 from onami.shim.paginator_base import EmojiSettings
 
 # Version detection
-if discord.version_info >= (2, 0, 0):
+if nextcord.version_info >= (2, 0, 0):
     from onami.shim.paginator_200 import PaginatorEmbedInterface, PaginatorInterface
 else:
     from onami.shim.paginator_170 import PaginatorEmbedInterface, PaginatorInterface
@@ -159,11 +150,11 @@ class WrappedFilePaginator(FilePaginator, WrappedPaginator):
 
 def use_file_check(ctx: commands.Context, size: int) -> bool:
     """
-    A check to determine if uploading a file and relying on Discord's file preview is acceptable over a PaginatorInterface.
+    A check to determine if uploading a file and relying on nextcord's file preview is acceptable over a PaginatorInterface.
     """
 
     return all([
-        size < 50_000,  # Check the text is below the Discord cutoff point;
+        size < 50_000,  # Check the text is below the nextcord cutoff point;
         not Flags.FORCE_PAGINATOR,  # Check the user hasn't explicitly disabled this;
         (not ctx.author.is_on_mobile() if ctx.guild and ctx.bot.intents.presences else True)  # Ensure the user isn't on mobile
     ])

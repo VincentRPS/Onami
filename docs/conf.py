@@ -181,7 +181,7 @@ texinfo_documents = [
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
-    'discord': ('https://discordpy.readthedocs.io/en/latest', None)
+    'nextcord': ('https://nextcordpy.readthedocs.io/en/latest', None)
 }
 
 # -- Options for todo extension ----------------------------------------------

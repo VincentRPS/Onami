@@ -8,7 +8,7 @@ Welcome to onami's documentation!
 
 .. image:: /images/onami-keyart.png
 
-onami is a debugging and utility extension for discord.py bots.
+onami is a debugging and utility extension for nextcord bots.
 
 The documentation is split up into categories. Please see the index below.
 

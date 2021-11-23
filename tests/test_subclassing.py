@@ -11,7 +11,7 @@ jishaku subclassing functionality test
 
 import pytest
 import utils
-from discord.ext import commands
+from nextcord.ext import commands
 
 
 @pytest.fixture(

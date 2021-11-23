@@ -11,18 +11,8 @@ HelpCommand subclasses with onami features
 
 """
 
-try:
-    import nextcord as discord
-    from nextcord.ext import commands
-    try:
-        import disnake as discord
-        from disnake.ext import commands
-
-    except(ModuleNotFoundError):
-        import discord
-        from discord.ext import commands
-except:
-    pass
+import nextcord as nextcord
+from nextcord.ext import commands
 
 from onami.paginators import PaginatorEmbedInterface, PaginatorInterface
 

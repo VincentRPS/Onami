@@ -35,7 +35,7 @@ Here is an example of a simple custom cog using this setup:
 
 .. code:: python3
 
-    from discord.ext import commands
+    from nextcord.ext import commands
 
     from onami.features.python import PythonFeature
     from onami.features.root_command import RootCommand
@@ -55,7 +55,7 @@ Thus, you can make a cog without any optional features like so:
 
 .. code:: python3
 
-    from discord.ext import commands
+    from nextcord.ext import commands
 
     from onami.cog import STANDARD_FEATURES
 
@@ -72,7 +72,7 @@ To use these features as well, simply add them to your cog:
 
 .. code:: python3
 
-    from discord.ext import commands
+    from nextcord.ext import commands
 
     from onami.cog import STANDARD_FEATURES, OPTIONAL_FEATURES
 
@@ -136,7 +136,7 @@ To change who can use onami, you must change how the owner is determined in your
 .. code:: python3
 
     class MyBot(commands.Bot):
-        async def is_owner(self, user: discord.User):
+        async def is_owner(self, user: nextcord.User):
             if something:  # Implement your own conditions here
                 return True
 
@@ -200,12 +200,12 @@ Codeblocks passed support yielding. Yielding allows results to be received durin
 
 Yielded results are treated the same as if they were returned.
 
-When using the ``oni py`` command, there are a set of contextual variables you can use to interact with Discord:
+When using the ``oni py`` command, there are a set of contextual variables you can use to interact with nextcord:
 
 +----------------+-----------------------------------------------------------+
-| ``_bot``       |  The :class:`discord.ext.commands.Bot` instance.          |
+| ``_bot``       |  The :class:`nextcord.ext.commands.Bot` instance.          |
 +----------------+-----------------------------------------------------------+
-| ``_ctx``       |  The invoking :class:`discord.ext.commands.Context`.      |
+| ``_ctx``       |  The invoking :class:`nextcord.ext.commands.Context`.      |
 +----------------+-----------------------------------------------------------+
 | ``_message``   |  An alias for ``_ctx.message``.                           |
 +----------------+                                                           |
@@ -217,9 +217,9 @@ When using the ``oni py`` command, there are a set of contextual variables you c
 +----------------+-----------------------------------------------------------+
 | ``_guild``     |  An alias for ``_ctx.guild``.                             |
 +----------------+-----------------------------------------------------------+
-| ``_find``      |  A shorthand for :func:`discord.utils.find`.              |
+| ``_find``      |  A shorthand for :func:`nextcord.utils.find`.              |
 +----------------+-----------------------------------------------------------+
-| ``_get``       |  A shorthand for :func:`discord.utils.get`.               |
+| ``_get``       |  A shorthand for :func:`nextcord.utils.get`.               |
 +----------------+-----------------------------------------------------------+
 
 Example:
@@ -258,9 +258,9 @@ Commands
 
     Empty strings will be sent as a ZWSP (``\u200b``).
 
-    :class:`discord.File` instances will be uploaded.
+    :class:`nextcord.File` instances will be uploaded.
 
-    :class:`discord.Embed` instances will be sent as embeds.
+    :class:`nextcord.Embed` instances will be sent as embeds.
 
     Any other instance is ``repr``'d and sent using the same rules as a string.
 
@@ -352,7 +352,7 @@ Commands
 
 .. py:function:: oni permtrace <channel> [targets...]
 
-    Emulates Discord's permission calculation system to create a breakdown of where certain permissions for a member come from.
+    Emulates nextcord's permission calculation system to create a breakdown of where certain permissions for a member come from.
 
     Targets can either be a member, or a list of roles (to emulate a member with those roles).
     The command will take into account guild permissions and the overwrites for the roles (and member, if applicable) to produce the resulting effective permissions.

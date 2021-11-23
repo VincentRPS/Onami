@@ -67,7 +67,7 @@ You can use them like this:
 
 .. code:: python3
 
-    from discord.ext import commands
+    from nextcord.ext import commands
 
     from onami.help_command import MinimalPaginatorHelp
 
