@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 """
-jishaku
-~~~~~~~
+Onami
+~~~~~~
 
-A discord.py extension including useful tools for bot development and debugging.
+A pythonic discord extension including useful tools for bot development and debugging.
 
-:copyright: (c) 2021 Devon (Gorialis) R
+:copyright: (c) 2021 Devon (Gorialis) R & 2021 VincentRPS
 :license: MIT, see LICENSE for more details.
 
 """
@@ -18,7 +18,7 @@ from jishaku.flags import Flags  # noqa: F401
 from jishaku.meta import *  # noqa: F401
 
 __all__ = (
-    'Jishaku',
+    'Onami',
     'Feature',
     'Flags',
     'setup'
