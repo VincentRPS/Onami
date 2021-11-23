@@ -28,7 +28,7 @@ a debugging and utility extension for nextcord bots
 
 # Fork
 
-Onami is a actively maintained fork of Jishaku for **Every Fork** of nextcord
+Onami is a actively maintained fork of Jishaku for nextcord
 
 
 onami is an extension for bot developers that enables rapid prototyping, experimentation, and debugging of features for bots.
