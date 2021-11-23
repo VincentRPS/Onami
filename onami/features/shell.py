@@ -18,6 +18,7 @@ from onami.exception_handling import ReplResponseReactor
 from onami.features.baseclass import Feature
 from onami.paginators import PaginatorInterface, WrappedPaginator
 from onami.shell import ShellReader
+from onami.cog import version, build
 
 
 class ShellFeature(Feature):
@@ -59,6 +60,14 @@ class ShellFeature(Feature):
         """
 
         return await ctx.invoke(self.oni_shell, argument=Codeblock(argument.language, "git " + argument.content))
+    
+    @Feature.Command(parent="oni", name="version")
+    async def oni_version(self, ctx: commands.Context):
+        """
+        Version Showing
+        """
+
+        await ctx.reply(f"Onami Version {version} and build {build}")
 
     @Feature.Command(parent="oni", name="pip")
     async def oni_pip(self, ctx: commands.Context, *, argument: codeblock_converter):
