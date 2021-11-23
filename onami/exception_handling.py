@@ -16,21 +16,9 @@ import subprocess
 import traceback
 import typing
 
-try:
-    import nextcord as discord
-    from nextcord.ext import commands
-    try:
-        import disnake as discord
-        from disnake.ext import commands
 
-    except(ModuleNotFoundError):
-        import discord
-        from discord.ext import commands
-except:
-    pass
-
-from onami.flags import Flags
-
+import nextcord 
+from nextcord.ext import commands
 
 async def send_traceback(destination: discord.abc.Messageable, verbosity: int, *exc_info):
     """

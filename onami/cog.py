@@ -17,7 +17,8 @@ version = "1.0.0a1"
 build = "21"
 
 
-
+import nextcord
+from nextcord.ext import commands
 
 
 try:
@@ -25,24 +26,6 @@ try:
 
 except:
     print("Failed To Load Onami")
-
-try:
-    import nextcord as discord
-    from nextcord.ext import commands
-
-except(ModuleNotFoundError):
-    import discord
-    from discord.ext import commands
-    print("Onami: nextcord not found")
-
-try:
-    import disnake as discord
-    from disnake.ext import commands
-
-except(ModuleNotFoundError):
-    import discord
-    from discord.ext import commands
-    print("Onami: disnake not found")
 
 finally:
     print(f"Onami Has Loaded into build {build}")
