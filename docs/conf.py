@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-from ..onami.meta import __version__
+from ..onami.meta import *
 
 project = 'onami'
 copyright = '2021, Gorialis & 2021-present VincentRPS'
