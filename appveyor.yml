@@ -26,7 +26,7 @@ install:
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
   - "python -m pip install -U pip setuptools wheel"
-  - "pip install -U \"nextcord[voice] @ git+https://github.com/Rapptz/nextcord@master\""
+  - "pip install -U \"nextcord[voice] @ git+https://github.com/nextcord/nextcord@master\""
   - "pip install -U -r requirements/_.txt -r requirements/docs.txt -r requirements/procinfo.txt -r requirements/test.txt -r requirements/voice.txt"
 
 test_script:
