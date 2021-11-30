@@ -124,8 +124,6 @@ setup(
 
     extras_require=EXTRA_REQUIRES,
 
-    download_url='https://github.com/VincentRPS/Onami/archive/{}.tar.gz'.format(VERSION),
-
     keywords='onami nextcord nextcord cog repl extension onami',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
