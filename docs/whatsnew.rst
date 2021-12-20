@@ -18,21 +18,7 @@ This is a patch release to fix a number of issues with permtrace and improve ``_
 Version 2.3.0
 -------------
 
-As nextcord development has ceased, this update serves to set the expectations for onami going forward.
-
-I have already gone over everything in my README writeup, so I will reproduce it here for your convenience.
-
-    As of the 27th of August 2021, `nextcord has ceased development <https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1>`_.
-
-    onami will continue to be maintained targeting Any fork possible
-
-    As all trusted contributors have rejected continuing the library, I do not have enough trust in any forks to target those instead. The existing forks are handled by inexperienced developers, and I figure this will continue to be the case in the future, as all of the developers experienced enough to carry the torch do not want to maintain the library for similar reasons to Danny himself.
-
-    However, if you personally decide that you wish to use a fork, I will allow onami to honor your decision by removing the ``nextcord`` package requirement. **This means, from now on, installing onami will not automatically handle installing nextcord, you must choose a version to use yourself**. Any fork that you use must be compatible with the original (in that it supplies the ``nextcord`` module and its namespaces).
-
-    When April 2022 comes, I will make a decision at the time as to whether I want to continue maintaining onami. I still enjoy making and maintaining bots, but implementing onami under the philosophies I have defined so far will likely be impossible under the new slash commands, and I don't really want to compromise my work for the sake of appeasing a company that doesn't care for its developers.
-
-    I hope you've found onami useful, and hopefully it will get to live on in one way or another.
+No changelog for this version.
 
 
 Version 2.2.0
