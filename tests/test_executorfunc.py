@@ -13,7 +13,6 @@ import asyncio
 import inspect
 
 import pytest
-
 from jishaku.functools import executor_function
 
 
@@ -29,8 +28,8 @@ def sig(*args, **kwargs):
     [
         (*sig(1, 2, c=3), (1, 2, 3)),
         (*sig(3, c=4), (3, None, 4)),
-        (*sig(a=5, b=6, c=7), (5, 6, 7))
-    ]
+        (*sig(a=5, b=6, c=7), (5, 6, 7)),
+    ],
 )
 def test_magic_executor(args, kwargs, expected_return):
     loop = asyncio.get_event_loop()
@@ -49,4 +48,6 @@ def test_magic_executor(args, kwargs, expected_return):
 
     assert non_executor(*args, **kwargs) == expected_return
     assert loop.run_until_complete(exact_executor(*args, **kwargs)) == expected_return
-    assert loop.run_until_complete(redefined_executor(*args, **kwargs)) == expected_return
+    assert (
+        loop.run_until_complete(redefined_executor(*args, **kwargs)) == expected_return
+    )

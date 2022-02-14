@@ -13,9 +13,8 @@ import collections  # for __iadd__ test
 
 import nextcord
 import pytest
-from utils import run_async
-
 from jishaku.repl.inspections import all_inspections
+from utils import run_async
 
 
 @pytest.mark.parametrize(
@@ -26,8 +25,8 @@ from jishaku.repl.inspections import all_inspections
         tuple,  # cover many-subclass truncation
         [False, 1, "2", 3.0],  # cover content types
         collections.Counter,  # cover inplace operators
-        run_async  # cover current-working-directory inspections
-    ]
+        run_async,  # cover current-working-directory inspections
+    ],
 )
 def test_object_inspection(target):
     for _, _ in all_inspections(target):

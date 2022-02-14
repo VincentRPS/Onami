@@ -29,12 +29,14 @@ def run_async(func):
 
 
 def sentinel():
-    return random.randint(10**16, 10**18)
+    return random.randint(10 ** 16, 10 ** 18)
 
 
 def magic_coro_mock():
     coro = mock.MagicMock(name="coro_result")
-    coro_func = mock.MagicMock(name="coro_function", side_effect=asyncio.coroutine(coro))
+    coro_func = mock.MagicMock(
+        name="coro_function", side_effect=asyncio.coroutine(coro)
+    )
     coro_func.coro = coro
 
     return coro_func
@@ -72,30 +74,26 @@ def nested_mocks(ctx, standards, coros):
 
 @contextlib.contextmanager
 def mock_ctx(bot: commands.Bot = None):
-    ctx = mock.MagicMock(name='ctx')
+    ctx = mock.MagicMock(name="ctx")
 
     standard_mocks = []
 
     coro_mocks = [
-        ('bot', 'get_context'),
-        ('message', 'channel', 'send'),
-        ('message', 'channel', 'send', 'coro', 'return_value', 'add_reaction'),
-        ('message', 'channel', 'send', 'coro', 'return_value', 'delete'),
-        ('message', 'channel', 'send', 'coro', 'return_value', 'edit'),
-        ('message', 'channel', 'send', 'coro', 'return_value', 'remove_reaction'),
-        ('reinvoke',)
+        ("bot", "get_context"),
+        ("message", "channel", "send"),
+        ("message", "channel", "send", "coro", "return_value", "add_reaction"),
+        ("message", "channel", "send", "coro", "return_value", "delete"),
+        ("message", "channel", "send", "coro", "return_value", "edit"),
+        ("message", "channel", "send", "coro", "return_value", "remove_reaction"),
+        ("reinvoke",),
     ]
 
     if bot:
         ctx.bot = bot
-        standard_mocks.append(
-            ('bot', '_connection', 'user')
-        )
+        standard_mocks.append(("bot", "_connection", "user"))
     else:
         ctx.bot.loop = asyncio.get_event_loop()
-        standard_mocks.append(
-            ('bot', 'user')
-        )
+        standard_mocks.append(("bot", "user"))
 
     with nested_mocks(ctx, standard_mocks, coro_mocks):
         ctx.author = ctx.message.author

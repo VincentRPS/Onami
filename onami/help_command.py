@@ -23,14 +23,16 @@ class DefaultPaginatorHelp(commands.DefaultHelpCommand):
     """
 
     def __init__(self, **options):
-        paginator = options.pop('paginator', commands.Paginator(max_size=1985))
+        paginator = options.pop("paginator", commands.Paginator(max_size=1985))
 
         super().__init__(paginator=paginator, **options)
 
     async def send_pages(self):
         destination = self.get_destination()
 
-        interface = PaginatorInterface(self.context.bot, self.paginator, owner=self.context.author)
+        interface = PaginatorInterface(
+            self.context.bot, self.paginator, owner=self.context.author
+        )
         await interface.send_to(destination)
 
 
@@ -42,7 +44,9 @@ class DefaultEmbedPaginatorHelp(commands.DefaultHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
 
-        interface = PaginatorEmbedInterface(self.context.bot, self.paginator, owner=self.context.author)
+        interface = PaginatorEmbedInterface(
+            self.context.bot, self.paginator, owner=self.context.author
+        )
         await interface.send_to(destination)
 
 
@@ -52,14 +56,18 @@ class MinimalPaginatorHelp(commands.MinimalHelpCommand):
     """
 
     def __init__(self, **options):
-        paginator = options.pop('paginator', commands.Paginator(prefix=None, suffix=None, max_size=1985))
+        paginator = options.pop(
+            "paginator", commands.Paginator(prefix=None, suffix=None, max_size=1985)
+        )
 
         super().__init__(paginator=paginator, **options)
 
     async def send_pages(self):
         destination = self.get_destination()
 
-        interface = PaginatorInterface(self.context.bot, self.paginator, owner=self.context.author)
+        interface = PaginatorInterface(
+            self.context.bot, self.paginator, owner=self.context.author
+        )
         await interface.send_to(destination)
 
 
@@ -71,5 +79,7 @@ class MinimalEmbedPaginatorHelp(commands.MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
 
-        interface = PaginatorEmbedInterface(self.context.bot, self.paginator, owner=self.context.author)
+        interface = PaginatorEmbedInterface(
+            self.context.bot, self.paginator, owner=self.context.author
+        )
         await interface.send_to(destination)

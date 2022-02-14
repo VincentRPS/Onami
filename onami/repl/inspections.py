@@ -44,6 +44,7 @@ def add_inspection(name):
 
         INSPECTIONS.append((name, encapsulated))
         return func
+
     return inspection_inner
 
 
@@ -64,10 +65,10 @@ def class_name(obj):
     """
 
     name = obj.__name__
-    module = getattr(obj, '__module__')
+    module = getattr(obj, "__module__")
 
     if module:
-        name = f'{module}.{name}'
+        name = f"{module}.{name}"
     return name
 
 
@@ -95,7 +96,7 @@ def mro_inspection(obj):
     if not inspect.isclass(obj):
         return
 
-    return ', '.join(class_name(x) for x in inspect.getmro(obj))
+    return ", ".join(class_name(x) for x in inspect.getmro(obj))
 
 
 @add_inspection("Type MRO")
@@ -104,7 +105,7 @@ def type_mro_inspection(obj):
     if obj_type in (type, object):
         return
 
-    return ', '.join(class_name(x) for x in inspect.getmro(obj_type))
+    return ", ".join(class_name(x) for x in inspect.getmro(obj_type))
 
 
 @add_inspection("Subclasses")
@@ -114,10 +115,10 @@ def subclass_inspection(obj):
     else:
         return
 
-    output = ', '.join(class_name(x) for x in subclasses[0:5])
+    output = ", ".join(class_name(x) for x in subclasses[0:5])
 
     if len(subclasses) > 5:
-        output += ', ...'
+        output += ", ..."
 
     return output
 
@@ -132,7 +133,7 @@ def file_loc_inspection(obj):
     file_loc = inspect.getfile(obj)
     cwd = os.getcwd()
     if file_loc.startswith(cwd):
-        file_loc = "." + file_loc[len(cwd):]
+        file_loc = "." + file_loc[len(cwd) :]
     return file_loc
 
 
@@ -155,33 +156,35 @@ def content_type_inspection(obj):
     total = len(obj)
     types = collections.Counter(type(x) for x in obj)
 
-    output = ', '.join(f'{x.__name__} ({y*100/total:.1f}\uFF05)' for x, y in types.most_common(3))
+    output = ", ".join(
+        f"{x.__name__} ({y*100/total:.1f}\uFF05)" for x, y in types.most_common(3)
+    )
     if len(types) > 3:
-        output += ', ...'
+        output += ", ..."
 
     return output
 
 
 POSSIBLE_OPS = {
-    '<': 'lt',
-    '<=': 'le',
-    '==': 'eq',
-    '!=': 'ne',
-    '>': 'gt',
-    '>=': 'ge',
-    '+': 'add',
-    '-': 'sub',
-    '*': 'mul',
-    '@': 'matmul',
-    '/': 'truediv',
-    '//': 'floordiv',
-    '%': 'mod',
-    '**': 'pow',
-    '<<': 'lshift',
-    '>>': 'rshift',
-    '&': 'and',
-    '^': 'xor',
-    '|': 'or'
+    "<": "lt",
+    "<=": "le",
+    "==": "eq",
+    "!=": "ne",
+    ">": "gt",
+    ">=": "ge",
+    "+": "add",
+    "-": "sub",
+    "*": "mul",
+    "@": "matmul",
+    "/": "truediv",
+    "//": "floordiv",
+    "%": "mod",
+    "**": "pow",
+    "<<": "lshift",
+    ">>": "rshift",
+    "&": "and",
+    "^": "xor",
+    "|": "or",
 }
 
 
@@ -202,12 +205,12 @@ def compat_operation_inspection(obj):
     operations = []
 
     for operation, member in POSSIBLE_OPS.items():
-        if f'__{member}__' in this_dict and check_not_slot(obj, f'__{member}__'):
+        if f"__{member}__" in this_dict and check_not_slot(obj, f"__{member}__"):
             operations.append(operation)
-        elif f'__r{member}__' in this_dict and check_not_slot(obj, f'r__{member}__'):
+        elif f"__r{member}__" in this_dict and check_not_slot(obj, f"r__{member}__"):
             operations.append(operation)
 
-        if f'__i{member}__' in this_dict and check_not_slot(obj, f'i__{member}__'):
-            operations.append(f'{operation}=')
+        if f"__i{member}__" in this_dict and check_not_slot(obj, f"i__{member}__"):
+            operations.append(f"{operation}=")
 
-    return ' '.join(operations)
+    return " ".join(operations)

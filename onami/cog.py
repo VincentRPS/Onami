@@ -20,7 +20,6 @@ build = "21"
 import nextcord
 from nextcord.ext import commands
 
-
 try:
     print(f"Loading Onami V{version}")
 
@@ -46,7 +45,16 @@ __all__ = (
     "setup",
 )
 
-STANDARD_FEATURES = (VoiceFeature, GuildFeature, FilesystemFeature, InvocationFeature, ShellFeature, PythonFeature, ManagementFeature, RootCommand)
+STANDARD_FEATURES = (
+    VoiceFeature,
+    GuildFeature,
+    FilesystemFeature,
+    InvocationFeature,
+    ShellFeature,
+    PythonFeature,
+    ManagementFeature,
+    RootCommand,
+)
 
 OPTIONAL_FEATURES = []
 
@@ -58,7 +66,9 @@ else:
     OPTIONAL_FEATURES.insert(0, YouTubeFeature)
 
 
-class Onami(*OPTIONAL_FEATURES, *STANDARD_FEATURES):  # pylint: disable=too-few-public-methods
+class Onami(
+    *OPTIONAL_FEATURES, *STANDARD_FEATURES
+):  # pylint: disable=too-few-public-methods
     """
     The frontend subclass that mixes in to form the final onami cog.
     """

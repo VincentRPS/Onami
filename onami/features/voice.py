@@ -33,16 +33,22 @@ class VoiceFeature(Feature):
         """
 
         if not nextcord.voice_client.has_nacl:
-            return await ctx.send("No voice support detected, Please install PyNaCl by using `pip install PyNaCl`")
+            return await ctx.send(
+                "No voice support detected, Please install PyNaCl by using `pip install PyNaCl`"
+            )
 
         if not nextcord.opus.is_loaded():
-            if hasattr(nextcord.opus, '_load_default'):
-                if not nextcord.opus._load_default():  # pylint: disable=protected-access,no-member
+            if hasattr(nextcord.opus, "_load_default"):
+                if (
+                    not nextcord.opus._load_default()
+                ):  # pylint: disable=protected-access,no-member
                     return await ctx.send(
                         "Voice cannot be used because libopus is not loaded and attempting to load the default failed."
                     )
             else:
-                return await ctx.send("Voice cannot be used because libopus is not loaded.")
+                return await ctx.send(
+                    "Voice cannot be used because libopus is not loaded."
+                )
 
     @staticmethod
     async def connected_check(ctx: commands.Context):
@@ -68,10 +74,17 @@ class VoiceFeature(Feature):
             return check
 
         if not ctx.guild.voice_client.is_playing():
-            return await ctx.send("The voice client in this guild is not playing anything.")
+            return await ctx.send(
+                "The voice client in this guild is not playing anything."
+            )
 
-    @Feature.Command(parent="oni", name="voice", aliases=["vc"],
-                     invoke_without_command=True, ignore_extra=False)
+    @Feature.Command(
+        parent="oni",
+        name="voice",
+        aliases=["vc"],
+        invoke_without_command=True,
+        ignore_extra=False,
+    )
     async def oni_voice(self, ctx: commands.Context):
         """
         Voice-related commands.
@@ -88,12 +101,18 @@ class VoiceFeature(Feature):
         if not voice or not voice.is_connected():
             return await ctx.send("Not connected.")
 
-        await ctx.send(f"Connected to {voice.channel.name}, "
-                       f"{'paused' if voice.is_paused() else 'playing' if voice.is_playing() else 'idle'}.")
+        await ctx.send(
+            f"Connected to {voice.channel.name}, "
+            f"{'paused' if voice.is_paused() else 'playing' if voice.is_playing() else 'idle'}."
+        )
 
     @Feature.Command(parent="oni_voice", name="join", aliases=["connect"])
-    async def oni_vc_join(self, ctx: commands.Context, *,
-                          destination: typing.Union[nextcord.VoiceChannel, nextcord.Member] = None):
+    async def oni_vc_join(
+        self,
+        ctx: commands.Context,
+        *,
+        destination: typing.Union[nextcord.VoiceChannel, nextcord.Member] = None,
+    ):
         """
         Joins a voice channel, or moves to it if already connected.
 
@@ -198,8 +217,10 @@ class VoiceFeature(Feature):
         source = ctx.guild.voice_client.source
 
         if not isinstance(source, nextcord.PCMVolumeTransformer):
-            return await ctx.send("This source doesn't support adjusting volume or "
-                                  "the interface to do so is not exposed.")
+            return await ctx.send(
+                "This source doesn't support adjusting volume or "
+                "the interface to do so is not exposed."
+            )
 
         source.volume = volume
 

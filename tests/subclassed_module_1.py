@@ -14,9 +14,8 @@ This variant overrides behavior using a Feature.
 
 """
 
-from nextcord.ext import commands
-
 import jishaku
+from nextcord.ext import commands
 
 
 class ThirdPartyFeature(jishaku.Feature):
@@ -24,15 +23,21 @@ class ThirdPartyFeature(jishaku.Feature):
     overriding feature for test
     """
 
-    @jishaku.Feature.Command(name="jishaku", aliases=["jsk"], invoke_without_command=True, ignore_extra=False)
+    @jishaku.Feature.Command(
+        name="jishaku", aliases=["jsk"], invoke_without_command=True, ignore_extra=False
+    )
     async def jsk(self, ctx: commands.Context):
         """
         override test
         """
-        return await ctx.send("The behavior of this command has been overridden with a third party feature.")
+        return await ctx.send(
+            "The behavior of this command has been overridden with a third party feature."
+        )
 
 
-class Magnet1(ThirdPartyFeature, *jishaku.OPTIONAL_FEATURES, *jishaku.STANDARD_FEATURES):  # pylint: disable=too-few-public-methods
+class Magnet1(
+    ThirdPartyFeature, *jishaku.OPTIONAL_FEATURES, *jishaku.STANDARD_FEATURES
+):  # pylint: disable=too-few-public-methods
     """
     The extended Jishaku cog
     """

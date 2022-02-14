@@ -25,8 +25,14 @@ if nextcord.version_info >= (2, 0, 0):
 else:
     from onami.shim.paginator_170 import PaginatorEmbedInterface, PaginatorInterface
 
-__all__ = ('EmojiSettings', 'PaginatorInterface', 'PaginatorEmbedInterface',
-           'WrappedPaginator', 'FilePaginator', 'use_file_check')
+__all__ = (
+    "EmojiSettings",
+    "PaginatorInterface",
+    "PaginatorEmbedInterface",
+    "WrappedPaginator",
+    "FilePaginator",
+    "use_file_check",
+)
 
 
 class WrappedPaginator(commands.Paginator):
@@ -49,18 +55,25 @@ class WrappedPaginator(commands.Paginator):
         with any provided delimiter.
     """
 
-    def __init__(self, *args, wrap_on=('\n', ' '), include_wrapped=True, force_wrap=False, **kwargs):
+    def __init__(
+        self,
+        *args,
+        wrap_on=("\n", " "),
+        include_wrapped=True,
+        force_wrap=False,
+        **kwargs,
+    ):
         super().__init__(*args, **kwargs)
         self.wrap_on = wrap_on
         self.include_wrapped = include_wrapped
         self.force_wrap = force_wrap
 
-    def add_line(self, line='', *, empty=False):
+    def add_line(self, line="", *, empty=False):
         true_max_size = self.max_size - self._prefix_len - self._suffix_len - 2
         original_length = len(line)
 
         while len(line) > true_max_size:
-            search_string = line[0:true_max_size - 1]
+            search_string = line[0 : true_max_size - 1]
             wrapped = False
 
             for delimiter in self.wrap_on:
@@ -73,14 +86,14 @@ class WrappedPaginator(commands.Paginator):
                     if self.include_wrapped:
                         line = line[position:]
                     else:
-                        line = line[position + len(delimiter):]
+                        line = line[position + len(delimiter) :]
 
                     break
 
             if not wrapped:
                 if self.force_wrap:
-                    super().add_line(line[0:true_max_size - 1])
-                    line = line[true_max_size - 1:]
+                    super().add_line(line[0 : true_max_size - 1])
+                    line = line[true_max_size - 1 :]
                 else:
                     raise ValueError(
                         f"Line of length {original_length} had sequence of {len(line)} characters"
@@ -108,7 +121,7 @@ class FilePaginator(commands.Paginator):
     """
 
     def __init__(self, fp, line_span=None, language_hints=(), **kwargs):
-        language = ''
+        language = ""
 
         for hint in language_hints:
             language = get_language(hint)
@@ -125,9 +138,9 @@ class FilePaginator(commands.Paginator):
         content, _, file_language = guess_file_traits(fp.read())
 
         language = file_language or language
-        lines = content.split('\n')
+        lines = content.split("\n")
 
-        super().__init__(prefix=f'```{language}', suffix='```', **kwargs)
+        super().__init__(prefix=f"```{language}", suffix="```", **kwargs)
 
         if line_span:
             line_span = sorted(line_span)
@@ -135,7 +148,7 @@ class FilePaginator(commands.Paginator):
             if min(line_span) < 1 or max(line_span) > len(lines):
                 raise ValueError("Linespan goes out of bounds.")
 
-            lines = lines[line_span[0] - 1:line_span[1]]
+            lines = lines[line_span[0] - 1 : line_span[1]]
 
         for line in lines:
             self.add_line(line)
@@ -153,8 +166,14 @@ def use_file_check(ctx: commands.Context, size: int) -> bool:
     A check to determine if uploading a file and relying on nextcord's file preview is acceptable over a PaginatorInterface.
     """
 
-    return all([
-        size < 50_000,  # Check the text is below the nextcord cutoff point;
-        not Flags.FORCE_PAGINATOR,  # Check the user hasn't explicitly disabled this;
-        (not ctx.author.is_on_mobile() if ctx.guild and ctx.bot.intents.presences else True)  # Ensure the user isn't on mobile
-    ])
+    return all(
+        [
+            size < 50_000,  # Check the text is below the nextcord cutoff point;
+            not Flags.FORCE_PAGINATOR,  # Check the user hasn't explicitly disabled this;
+            (
+                not ctx.author.is_on_mobile()
+                if ctx.guild and ctx.bot.intents.presences
+                else True
+            ),  # Ensure the user isn't on mobile
+        ]
+    )

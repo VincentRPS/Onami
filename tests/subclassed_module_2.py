@@ -14,22 +14,27 @@ This variant overrides behavior directly.
 
 """
 
+import jishaku
 from nextcord.ext import commands
 
-import jishaku
 
-
-class Magnet2(*jishaku.OPTIONAL_FEATURES, *jishaku.STANDARD_FEATURES):  # pylint: disable=too-few-public-methods
+class Magnet2(
+    *jishaku.OPTIONAL_FEATURES, *jishaku.STANDARD_FEATURES
+):  # pylint: disable=too-few-public-methods
     """
     The extended Jishaku cog
     """
 
-    @jishaku.Feature.Command(name="jishaku", aliases=["jsk"], invoke_without_command=True, ignore_extra=False)
+    @jishaku.Feature.Command(
+        name="jishaku", aliases=["jsk"], invoke_without_command=True, ignore_extra=False
+    )
     async def jsk(self, ctx: commands.Context):
         """
         override test
         """
-        return await ctx.send("The behavior of this command has been overridden directly.")
+        return await ctx.send(
+            "The behavior of this command has been overridden directly."
+        )
 
 
 def setup(bot: commands.Bot):

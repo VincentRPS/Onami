@@ -19,10 +19,7 @@ from datetime import datetime, timezone
 
 from nextcord.ext import commands
 
-__all__ = (
-    'Feature',
-    'CommandTask'
-)
+__all__ = ("Feature", "CommandTask")
 
 
 CommandTask = collections.namedtuple("CommandTask", "index ctx task")
@@ -57,7 +54,7 @@ class Feature(commands.Cog):
     load_time: datetime = datetime.utcnow().replace(tzinfo=timezone.utc)
 
     def __init__(self, *args, **kwargs):  # pylint: disable=too-many-branches
-        self.bot: commands.Bot = kwargs.pop('bot')
+        self.bot: commands.Bot = kwargs.pop("bot")
         self.start_time: datetime = datetime.utcnow().replace(tzinfo=timezone.utc)
         self.tasks = collections.deque()
         self.task_count: int = 0
@@ -119,13 +116,18 @@ class Feature(commands.Cog):
             setattr(self, key, target_cmd)
 
         # pylint: disable=protected-access, access-member-before-definition
-        self.__cog_commands__ = (*self.__cog_commands__, *self.feature_commands.values())
+        self.__cog_commands__ = (
+            *self.__cog_commands__,
+            *self.feature_commands.values(),
+        )
         # pylint: enable=protected-access, access-member-before-definition
 
         # Don't really think this does much, but init Cog anyway.
         super().__init__(*args, **kwargs)
 
-    async def cog_check(self, ctx: commands.Context):  # pylint: disable=invalid-overridden-method
+    async def cog_check(
+        self, ctx: commands.Context
+    ):  # pylint: disable=invalid-overridden-method
         """
         Local check, makes all commands in resulting cogs owner-only
         """

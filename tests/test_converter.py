@@ -24,8 +24,8 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'one'
-    assert codeblock.language == 'py'
+    assert codeblock.content.strip() == "one"
+    assert codeblock.language == "py"
 
     text = """
     ```sql
@@ -36,8 +36,8 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'two'
-    assert codeblock.language == 'sql'
+    assert codeblock.content.strip() == "two"
+    assert codeblock.language == "sql"
 
     text = """
     ```txt
@@ -48,8 +48,8 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'three'
-    assert codeblock.language == 'txt'
+    assert codeblock.content.strip() == "three"
+    assert codeblock.language == "txt"
 
     text = """
     ```
@@ -60,7 +60,7 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'four'
+    assert codeblock.content.strip() == "four"
     assert not codeblock.language
 
     text = "five"
@@ -68,7 +68,7 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'five'
+    assert codeblock.content.strip() == "five"
     assert not codeblock.language
 
     text = """
@@ -79,7 +79,7 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'six\n```'
+    assert codeblock.content.strip() == "six\n```"
     assert not codeblock.language
 
     text = ""
@@ -87,7 +87,7 @@ def test_codeblock_converter():
     codeblock = codeblock_converter(inspect.cleandoc(text))
 
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == ''
+    assert codeblock.content.strip() == ""
     assert not codeblock.language
 
     text = """
@@ -98,17 +98,17 @@ def test_codeblock_converter():
 
     codeblock = codeblock_converter(inspect.cleandoc(text))
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'se``ven'
+    assert codeblock.content.strip() == "se``ven"
     assert not codeblock.language
 
     text = "``ei`ght``"
     codeblock = codeblock_converter(text)
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'ei`ght'
+    assert codeblock.content.strip() == "ei`ght"
     assert not codeblock.language
 
     text = "`nine`"
     codeblock = codeblock_converter(text)
     assert isinstance(codeblock, Codeblock)
-    assert codeblock.content.strip() == 'nine'
+    assert codeblock.content.strip() == "nine"
     assert not codeblock.language

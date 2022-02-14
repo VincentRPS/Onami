@@ -69,15 +69,17 @@ class FlagMeta(type):
     """
 
     def __new__(cls, name, base, attrs):
-        attrs['flag_map'] = {}
+        attrs["flag_map"] = {}
 
-        for flag_name, flag_type in attrs['__annotations__'].items():
-            attrs['flag_map'][flag_name] = Flag(flag_name, flag_type, attrs.pop(flag_name, None))
+        for flag_name, flag_type in attrs["__annotations__"].items():
+            attrs["flag_map"][flag_name] = Flag(
+                flag_name, flag_type, attrs.pop(flag_name, None)
+            )
 
         return super(FlagMeta, cls).__new__(cls, name, base, attrs)
 
     def __getattr__(cls, name: str):
-        if hasattr(cls, 'flag_map') and name in cls.flag_map:
+        if hasattr(cls, "flag_map") and name in cls.flag_map:
             return cls.flag_map[name].resolve(cls)
 
         return super().__getattribute__(name)
@@ -87,7 +89,9 @@ class FlagMeta(type):
             flag = cls.flag_map[name]
 
             if not isinstance(value, flag.flag_type):
-                raise ValueError(f"Attempted to set flag {name} to type {type(value).__name__} (should be {flag.flag_type.__name__})")
+                raise ValueError(
+                    f"Attempted to set flag {name} to type {type(value).__name__} (should be {flag.flag_type.__name__})"
+                )
 
             flag.override = value
         else:
@@ -115,7 +119,7 @@ class Flags(metaclass=FlagMeta):  # pylint: disable=too-few-public-methods
 
     # The scope prefix, i.e. the prefix that appears before onami's builtin variables in REPL sessions.
     # It is recommended that you set this programatically.
-    SCOPE_PREFIX: str = lambda flags: '' if flags.NO_UNDERSCORE else '_'
+    SCOPE_PREFIX: str = lambda flags: "" if flags.NO_UNDERSCORE else "_"
 
     # Flag to indicate whether to always use paginators over relying on nextcord's file preview
     FORCE_PAGINATOR: bool

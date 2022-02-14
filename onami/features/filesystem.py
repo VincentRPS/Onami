@@ -34,7 +34,9 @@ class FilesystemFeature(Feature):
     __cat_line_regex = re.compile(r"(?:\.\/+)?(.+?)(?:#L?(\d+)(?:\-L?(\d+))?)?$")
 
     @Feature.Command(parent="oni", name="cat")
-    async def oni_cat(self, ctx: commands.Context, argument: str):  # pylint: disable=too-many-locals
+    async def oni_cat(
+        self, ctx: commands.Context, argument: str
+    ):  # pylint: disable=too-many-locals
         """
         Read out a file, using syntax highlighting if detected.
 
@@ -60,8 +62,10 @@ class FilesystemFeature(Feature):
         size = os.path.getsize(path)
 
         if size <= 0:
-            return await ctx.send(f"`{path}`: Cowardly refusing to read a file with no size stat"
-                                  f" (it may be empty, endless or inaccessible).")
+            return await ctx.send(
+                f"`{path}`: Cowardly refusing to read a file with no size stat"
+                f" (it may be empty, endless or inaccessible)."
+            )
 
         if size > 128 * (1024 ** 2):
             return await ctx.send(f"`{path}`: Cowardly refusing to read a file >128MB.")
@@ -72,23 +76,30 @@ class FilesystemFeature(Feature):
                     if line_span:
                         content, *_ = guess_file_traits(file.read())
 
-                        lines = content.split('\n')[line_span[0] - 1:line_span[1]]
+                        lines = content.split("\n")[line_span[0] - 1 : line_span[1]]
 
-                        await ctx.send(file=nextcord.File(
-                            filename=pathlib.Path(file.name).name,
-                            fp=io.BytesIO('\n'.join(lines).encode('utf-8'))
-                        ))
+                        await ctx.send(
+                            file=nextcord.File(
+                                filename=pathlib.Path(file.name).name,
+                                fp=io.BytesIO("\n".join(lines).encode("utf-8")),
+                            )
+                        )
                     else:
-                        await ctx.send(file=nextcord.File(
-                            filename=pathlib.Path(file.name).name,
-                            fp=file
-                        ))
+                        await ctx.send(
+                            file=nextcord.File(
+                                filename=pathlib.Path(file.name).name, fp=file
+                            )
+                        )
                 else:
-                    paginator = WrappedFilePaginator(file, line_span=line_span, max_size=1985)
+                    paginator = WrappedFilePaginator(
+                        file, line_span=line_span, max_size=1985
+                    )
                     interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
                     await interface.send_to(ctx)
         except UnicodeDecodeError:
-            return await ctx.send(f"`{path}`: Couldn't determine the encoding of this file.")
+            return await ctx.send(
+                f"`{path}`: Couldn't determine the encoding of this file."
+            )
         except ValueError as exc:
             return await ctx.send(f"`{path}`: Couldn't read this file, {exc}")
 
@@ -107,10 +118,7 @@ class FilesystemFeature(Feature):
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     data = await response.read()
-                    hints = (
-                        response.content_type,
-                        url
-                    )
+                    hints = (response.content_type, url)
                     code = response.status
 
             if not data:
@@ -126,17 +134,24 @@ class FilesystemFeature(Feature):
                     if language:
                         break
 
-                await ctx.send(file=nextcord.File(
-                    filename=f"response.{language or 'txt'}",
-                    fp=io.BytesIO(data)
-                ))
+                await ctx.send(
+                    file=nextcord.File(
+                        filename=f"response.{language or 'txt'}", fp=io.BytesIO(data)
+                    )
+                )
             else:
                 try:
-                    paginator = WrappedFilePaginator(io.BytesIO(data), language_hints=hints, max_size=1985)
+                    paginator = WrappedFilePaginator(
+                        io.BytesIO(data), language_hints=hints, max_size=1985
+                    )
                 except UnicodeDecodeError:
-                    return await ctx.send(f"Couldn't determine the encoding of the response. (status code {code})")
+                    return await ctx.send(
+                        f"Couldn't determine the encoding of the response. (status code {code})"
+                    )
                 except ValueError as exc:
-                    return await ctx.send(f"Couldn't read response (status code {code}), {exc}")
+                    return await ctx.send(
+                        f"Couldn't read response (status code {code}), {exc}"
+                    )
 
                 interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
                 await interface.send_to(ctx)

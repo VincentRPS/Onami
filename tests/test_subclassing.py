@@ -15,19 +15,61 @@ from nextcord.ext import commands
 
 
 @pytest.fixture(
-    scope='module',
+    scope="module",
     params=[
         # Subclass 1 (Feature)
-        ("tests.subclassed_module_1", "Magnet1", "overridden with a third party feature", commands.Bot, {}),
-        ("tests.subclassed_module_1", "Magnet1", "overridden with a third party feature", commands.Bot, {"shard_id": 0, "shard_count": 2}),
-        ("tests.subclassed_module_1", "Magnet1", "overridden with a third party feature", commands.AutoShardedBot, {}),
+        (
+            "tests.subclassed_module_1",
+            "Magnet1",
+            "overridden with a third party feature",
+            commands.Bot,
+            {},
+        ),
+        (
+            "tests.subclassed_module_1",
+            "Magnet1",
+            "overridden with a third party feature",
+            commands.Bot,
+            {"shard_id": 0, "shard_count": 2},
+        ),
+        (
+            "tests.subclassed_module_1",
+            "Magnet1",
+            "overridden with a third party feature",
+            commands.AutoShardedBot,
+            {},
+        ),
         # Subclass 2 (direct)
-        ("tests.subclassed_module_2", "Magnet2", "overridden directly", commands.Bot, {}),
-        ("tests.subclassed_module_2", "Magnet2", "overridden directly", commands.Bot, {"shard_id": 0, "shard_count": 2}),
-        ("tests.subclassed_module_2", "Magnet2", "overridden directly", commands.AutoShardedBot, {}),
+        (
+            "tests.subclassed_module_2",
+            "Magnet2",
+            "overridden directly",
+            commands.Bot,
+            {},
+        ),
+        (
+            "tests.subclassed_module_2",
+            "Magnet2",
+            "overridden directly",
+            commands.Bot,
+            {"shard_id": 0, "shard_count": 2},
+        ),
+        (
+            "tests.subclassed_module_2",
+            "Magnet2",
+            "overridden directly",
+            commands.AutoShardedBot,
+            {},
+        ),
         # Test that the original still works after the load test
         ("jishaku", "Jishaku", "Module was loaded", commands.Bot, {}),
-        ("jishaku", "Jishaku", "Module was loaded", commands.Bot, {"shard_id": 0, "shard_count": 2}),
+        (
+            "jishaku",
+            "Jishaku",
+            "Module was loaded",
+            commands.Bot,
+            {"shard_id": 0, "shard_count": 2},
+        ),
         ("jishaku", "Jishaku", "Module was loaded", commands.AutoShardedBot, {}),
     ],
     ids=[
@@ -39,11 +81,11 @@ from nextcord.ext import commands
         "direct subclass (AutoShardedBot)",
         "native (Bot, unsharded)",
         "native (Bot, sharded)",
-        "native (AutoShardedBot)"
-    ]
+        "native (AutoShardedBot)",
+    ],
 )
 def bot(request):
-    b = request.param[3]('?', **request.param[4])
+    b = request.param[3]("?", **request.param[4])
     b.load_extension(request.param[0])
 
     b.test_cog = request.param[1]
@@ -63,7 +105,7 @@ async def test_commands(bot):
 
     # test 'jsk'
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk').callback(cog, ctx)
+        await bot.get_command("jsk").callback(cog, ctx)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]

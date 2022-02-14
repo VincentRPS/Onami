@@ -93,7 +93,7 @@ class AsyncSender:
         asyncsender received 3
     """
 
-    __slots__ = ('iterator', 'send_value')
+    __slots__ = ("iterator", "send_value")
 
     def __init__(self, iterator):
         self.iterator = iterator

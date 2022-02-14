@@ -74,25 +74,25 @@ async def http_post_json(*args, **kwargs) -> dict:
             return await response.json()
 
 
-def get_var_dict_from_ctx(ctx: commands.Context, prefix: str = '_'):
+def get_var_dict_from_ctx(ctx: commands.Context, prefix: str = "_"):
     """
     Returns the dict to be used in REPL for a given Context.
     """
 
     raw_var_dict = {
-        'author': ctx.author,
-        'bot': ctx.bot,
-        'channel': ctx.channel,
-        'ctx': ctx,
-        'find': nextcord.utils.find,
-        'get': nextcord.utils.get,
-        'guild': ctx.guild,
-        'http_get_bytes': http_get_bytes,
-        'http_get_json': http_get_json,
-        'http_post_bytes': http_post_bytes,
-        'http_post_json': http_post_json,
-        'message': ctx.message,
-        'msg': ctx.message
+        "author": ctx.author,
+        "bot": ctx.bot,
+        "channel": ctx.channel,
+        "ctx": ctx,
+        "find": nextcord.utils.find,
+        "get": nextcord.utils.get,
+        "guild": ctx.guild,
+        "http_get_bytes": http_get_bytes,
+        "http_get_json": http_get_json,
+        "http_post_bytes": http_post_bytes,
+        "http_post_json": http_post_json,
+        "message": ctx.message,
+        "msg": ctx.message,
     }
 
-    return {f'{prefix}{k}': v for k, v in raw_var_dict.items()}
+    return {f"{prefix}{k}": v for k, v in raw_var_dict.items()}

@@ -17,7 +17,7 @@ from nextcord.ext import commands
 
 
 @pytest.fixture(
-    scope='module',
+    scope="module",
     params=[
         ("jishaku", commands.Bot, {}),
         ("jishaku", commands.Bot, {"shard_id": 0, "shard_count": 2}),
@@ -32,11 +32,11 @@ from nextcord.ext import commands
         "jishaku (AutoShardedBot)",
         "jishaku.cog (Bot, unsharded)",
         "jishaku.cog (Bot, sharded)",
-        "jishaku.cog (AutoShardedBot)"
-    ]
+        "jishaku.cog (AutoShardedBot)",
+    ],
 )
 def bot(request):
-    b = request.param[1]('?', **request.param[2])
+    b = request.param[1]("?", **request.param[2])
     b.load_extension(request.param[0])
 
     yield b
@@ -57,7 +57,9 @@ def test_cog_attributes(bot):
     cog = bot.get_cog("Jishaku")
 
     cog.retain = False
-    assert cog.scope is not cog.scope, "Scope property should give new scopes on no retain"
+    assert (
+        cog.scope is not cog.scope
+    ), "Scope property should give new scopes on no retain"
 
     cog.retain = True
     assert cog.scope is cog.scope, "Scope property should be consistent on retain"
@@ -88,7 +90,7 @@ async def test_cog_check(bot):
     cog = bot.get_cog("Jishaku")
 
     with utils.mock_ctx() as ctx:
-        with utils.mock_coro(ctx.bot, 'is_owner'):
+        with utils.mock_coro(ctx.bot, "is_owner"):
             ctx.bot.is_owner.coro.return_value = True
 
             assert await cog.cog_check(ctx)
@@ -105,7 +107,7 @@ async def test_commands(bot):
 
     # test 'jsk'
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk').callback(cog, ctx)
+        await bot.get_command("jsk").callback(cog, ctx)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]
@@ -115,7 +117,7 @@ async def test_commands(bot):
     cog.jsk.hidden = False
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk hide').callback(cog, ctx)
+        await bot.get_command("jsk hide").callback(cog, ctx)
 
         assert cog.jsk.hidden
 
@@ -124,7 +126,7 @@ async def test_commands(bot):
         assert "now hidden" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk hide').callback(cog, ctx)
+        await bot.get_command("jsk hide").callback(cog, ctx)
 
         assert cog.jsk.hidden
 
@@ -133,7 +135,7 @@ async def test_commands(bot):
         assert "already hidden" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk show').callback(cog, ctx)
+        await bot.get_command("jsk show").callback(cog, ctx)
 
         assert not cog.jsk.hidden
 
@@ -142,7 +144,7 @@ async def test_commands(bot):
         assert "now visible" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk show').callback(cog, ctx)
+        await bot.get_command("jsk show").callback(cog, ctx)
 
         assert not cog.jsk.hidden
 
@@ -152,7 +154,7 @@ async def test_commands(bot):
 
     # test 'jsk tasks'
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk tasks').callback(cog, ctx)
+        await bot.get_command("jsk tasks").callback(cog, ctx)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]
@@ -160,7 +162,7 @@ async def test_commands(bot):
 
     with utils.mock_ctx() as ctx:
         with cog.submit(ctx):
-            interface = await bot.get_command('jsk tasks').callback(cog, ctx)
+            interface = await bot.get_command("jsk tasks").callback(cog, ctx)
 
             ctx.send.assert_called_once()
 
@@ -171,7 +173,9 @@ async def test_commands(bot):
         # test explicit
         with cog.submit(ctx) as command_task:
             with pytest.raises(asyncio.CancelledError):
-                await bot.get_command('jsk cancel').callback(cog, ctx, index=command_task.index)
+                await bot.get_command("jsk cancel").callback(
+                    cog, ctx, index=command_task.index
+                )
                 await asyncio.sleep(0.1)
 
             ctx.send.assert_called_once()
@@ -182,7 +186,7 @@ async def test_commands(bot):
         # test implicit
         with cog.submit(ctx) as command_task:
             with pytest.raises(asyncio.CancelledError):
-                await bot.get_command('jsk cancel').callback(cog, ctx, index=-1)
+                await bot.get_command("jsk cancel").callback(cog, ctx, index=-1)
                 await asyncio.sleep(0.1)
 
             ctx.send.assert_called_once()
@@ -192,7 +196,9 @@ async def test_commands(bot):
     with utils.mock_ctx() as ctx:
         # test unknown task
         with cog.submit(ctx) as command_task:
-            await bot.get_command('jsk cancel').callback(cog, ctx, index=123456789012345678)
+            await bot.get_command("jsk cancel").callback(
+                cog, ctx, index=123456789012345678
+            )
 
             ctx.send.assert_called_once()
             text = ctx.send.call_args[0][0]
@@ -200,7 +206,7 @@ async def test_commands(bot):
 
     with utils.mock_ctx() as ctx:
         # test no tasks
-        await bot.get_command('jsk cancel').callback(cog, ctx, index=123456789012345678)
+        await bot.get_command("jsk cancel").callback(cog, ctx, index=123456789012345678)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]
@@ -210,7 +216,7 @@ async def test_commands(bot):
     cog.retain = False
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=True)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=True)
 
         assert cog.retain
 
@@ -219,7 +225,7 @@ async def test_commands(bot):
         assert "is ON" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=True)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=True)
 
         assert cog.retain
 
@@ -228,14 +234,14 @@ async def test_commands(bot):
         assert "already set to ON" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=None)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=None)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]
         assert "is set to ON" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=False)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=False)
 
         assert not cog.retain
 
@@ -244,7 +250,7 @@ async def test_commands(bot):
         assert "is OFF" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=False)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=False)
 
         assert not cog.retain
 
@@ -253,7 +259,7 @@ async def test_commands(bot):
         assert "already set to OFF" in text
 
     with utils.mock_ctx() as ctx:
-        await bot.get_command('jsk retain').callback(cog, ctx, toggle=None)
+        await bot.get_command("jsk retain").callback(cog, ctx, toggle=None)
 
         ctx.send.assert_called_once()
         text = ctx.send.call_args[0][0]

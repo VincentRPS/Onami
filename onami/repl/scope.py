@@ -30,7 +30,7 @@ class Scope:
         scope = Scope({'a': 3})  # a Scope with a pre-existing global scope key, and an empty local scope.
     """
 
-    __slots__ = ('globals', 'locals')
+    __slots__ = ("globals", "locals")
 
     def __init__(self, globals_: dict = None, locals_: dict = None):
         self.globals: dict = globals_ or {}
@@ -122,7 +122,9 @@ class Scope:
         return self
 
 
-def get_parent_scope_from_var(name, global_ok=False, skip_frames=0) -> typing.Optional[Scope]:
+def get_parent_scope_from_var(
+    name, global_ok=False, skip_frames=0
+) -> typing.Optional[Scope]:
     """
     Iterates up the frame stack looking for a frame-scope containing the given variable name.
 
@@ -134,7 +136,7 @@ def get_parent_scope_from_var(name, global_ok=False, skip_frames=0) -> typing.Op
 
     stack = inspect.stack()
     try:
-        for frame_info in stack[skip_frames + 1:]:
+        for frame_info in stack[skip_frames + 1 :]:
             frame = None
 
             try:
@@ -160,7 +162,9 @@ def get_parent_var(name, global_ok=False, default=None, skip_frames=0):
         The content of the variable found by the given name, or None.
     """
 
-    scope = get_parent_scope_from_var(name, global_ok=global_ok, skip_frames=skip_frames + 1)
+    scope = get_parent_scope_from_var(
+        name, global_ok=global_ok, skip_frames=skip_frames + 1
+    )
 
     if not scope:
         return default

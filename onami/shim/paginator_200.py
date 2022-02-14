@@ -59,7 +59,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
 
     def __init__(self, bot: commands.Bot, paginator: commands.Paginator, **kwargs):
         if not isinstance(paginator, commands.Paginator):
-            raise TypeError('paginator must be a commands.Paginator instance')
+            raise TypeError("paginator must be a commands.Paginator instance")
 
         self._display_page = 0
 
@@ -68,10 +68,10 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         self.message = None
         self.paginator = paginator
 
-        self.owner = kwargs.pop('owner', None)
-        self.emojis = kwargs.pop('emoji', EMOJI_DEFAULT)
-        self.timeout = kwargs.pop('timeout', 7200)
-        self.delete_message = kwargs.pop('delete_message', False)
+        self.owner = kwargs.pop("owner", None)
+        self.emojis = kwargs.pop("emoji", EMOJI_DEFAULT)
+        self.timeout = kwargs.pop("timeout", 7200)
+        self.delete_message = kwargs.pop("delete_message", False)
 
         self.sent_page_reactions = False
 
@@ -82,8 +82,8 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
 
         if self.page_size > self.max_page_size:
             raise ValueError(
-                f'Paginator passed has too large of a page size for this interface. '
-                f'({self.page_size} > {self.max_page_size})'
+                f"Paginator passed has too large of a page size for this interface. "
+                f"({self.page_size} > {self.max_page_size})"
             )
 
         super().__init__(timeout=self.timeout)
@@ -98,7 +98,11 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         # pylint: disable=protected-access
         paginator_pages = list(self.paginator._pages)
         if len(self.paginator._current_page) > 1:
-            paginator_pages.append('\n'.join(self.paginator._current_page) + '\n' + (self.paginator.suffix or ''))
+            paginator_pages.append(
+                "\n".join(self.paginator._current_page)
+                + "\n"
+                + (self.paginator.suffix or "")
+            )
         # pylint: enable=protected-access
 
         return paginator_pages
@@ -138,7 +142,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         If this exceeds `max_page_size`, an exception is raised upon instantiation.
         """
         page_count = self.page_count
-        return self.paginator.max_size + len(f'\nPage {page_count}/{page_count}')
+        return self.paginator.max_size + len(f"\nPage {page_count}/{page_count}")
 
     @property
     def send_kwargs(self) -> dict:
@@ -150,7 +154,7 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         """
 
         content = self.pages[self.display_page]
-        return {'content': content, 'view': self}
+        return {"content": content, "view": self}
 
     def update_view(self):
         """
@@ -261,16 +265,25 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         """Check that determines whether this interaction should be honored"""
         return not self.owner or interaction.user.id == self.owner.id
 
-    @ui.button(label="1 \u200b \N{BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}", style=nextcord.ButtonStyle.secondary)
-    async def button_start(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(
+        label="1 \u200b \N{BLACK LEFT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR}",
+        style=nextcord.ButtonStyle.secondary,
+    )
+    async def button_start(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to send interface to first page"""
 
         self._display_page = 0
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK LEFT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary)
-    async def button_previous(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(
+        label="\N{BLACK LEFT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary
+    )
+    async def button_previous(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to send interface to previous page"""
 
         self._display_page -= 1
@@ -278,30 +291,46 @@ class PaginatorInterface(ui.View):  # pylint: disable=too-many-instance-attribut
         await interaction.response.edit_message(**self.send_kwargs)
 
     @ui.button(label="1", style=nextcord.ButtonStyle.primary)
-    async def button_current(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    async def button_current(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to refresh the interface"""
 
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK RIGHT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary)
-    async def button_next(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(
+        label="\N{BLACK RIGHT-POINTING TRIANGLE}", style=nextcord.ButtonStyle.secondary
+    )
+    async def button_next(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to send interface to next page"""
 
         self._display_page += 1
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR} \u200b 1", style=nextcord.ButtonStyle.secondary)
-    async def button_last(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(
+        label="\N{BLACK RIGHT-POINTING DOUBLE TRIANGLE WITH VERTICAL BAR} \u200b 1",
+        style=nextcord.ButtonStyle.secondary,
+    )
+    async def button_last(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to send interface to last page"""
 
         self._display_page = self.page_count - 1
         self.update_view()
         await interaction.response.edit_message(**self.send_kwargs)
 
-    @ui.button(label="\N{BLACK SQUARE FOR STOP} \u200b Close paginator", style=nextcord.ButtonStyle.danger)
-    async def button_close(self, button: ui.Button, interaction: nextcord.Interaction):  # pylint: disable=unused-argument
+    @ui.button(
+        label="\N{BLACK SQUARE FOR STOP} \u200b Close paginator",
+        style=nextcord.ButtonStyle.danger,
+    )
+    async def button_close(
+        self, button: ui.Button, interaction: nextcord.Interaction
+    ):  # pylint: disable=unused-argument
         """Button to close the interface"""
 
         message = self.message
@@ -317,13 +346,13 @@ class PaginatorEmbedInterface(PaginatorInterface):
     """
 
     def __init__(self, *args, **kwargs):
-        self._embed = kwargs.pop('embed', None) or nextcord.Embed()
+        self._embed = kwargs.pop("embed", None) or nextcord.Embed()
         super().__init__(*args, **kwargs)
 
     @property
     def send_kwargs(self) -> dict:
         self._embed.description = self.pages[self.display_page]
-        return {'embed': self._embed, 'view': self}
+        return {"embed": self._embed, "view": self}
 
     max_page_size = 2048
 

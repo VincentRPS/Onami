@@ -39,27 +39,32 @@ class ManagementFeature(Feature):
         Reports any extensions that failed to load.
         """
 
-        paginator = WrappedPaginator(prefix='', suffix='')
+        paginator = WrappedPaginator(prefix="", suffix="")
 
         # 'oni reload' on its own just reloads onami
-        if ctx.invoked_with == 'reload' and not extensions:
-            extensions = [['onami']]
+        if ctx.invoked_with == "reload" and not extensions:
+            extensions = [["onami"]]
 
         for extension in itertools.chain(*extensions):
             method, icon = (
-                (self.bot.reload_extension, "\N{CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS}")
-                if extension in self.bot.extensions else
-                (self.bot.load_extension, "\N{INBOX TRAY}")
+                (
+                    self.bot.reload_extension,
+                    "\N{CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS}",
+                )
+                if extension in self.bot.extensions
+                else (self.bot.load_extension, "\N{INBOX TRAY}")
             )
 
             try:
                 method(extension)
             except Exception as exc:  # pylint: disable=broad-except
-                traceback_data = ''.join(traceback.format_exception(type(exc), exc, exc.__traceback__, 1))
+                traceback_data = "".join(
+                    traceback.format_exception(type(exc), exc, exc.__traceback__, 1)
+                )
 
                 paginator.add_line(
                     f"{icon}\N{WARNING SIGN} `{extension}`\n```py\n{traceback_data}\n```",
-                    empty=True
+                    empty=True,
                 )
             else:
                 paginator.add_line(f"{icon} `{extension}`", empty=True)
@@ -75,18 +80,20 @@ class ManagementFeature(Feature):
         Reports any extensions that failed to unload.
         """
 
-        paginator = WrappedPaginator(prefix='', suffix='')
+        paginator = WrappedPaginator(prefix="", suffix="")
         icon = "\N{OUTBOX TRAY}"
 
         for extension in itertools.chain(*extensions):
             try:
                 self.bot.unload_extension(extension)
             except Exception as exc:  # pylint: disable=broad-except
-                traceback_data = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__, 1))
+                traceback_data = "".join(
+                    traceback.format_exception(type(exc), exc, exc.__traceback__, 1)
+                )
 
                 paginator.add_line(
                     f"{icon}\N{WARNING SIGN} `{extension}`\n```py\n{traceback_data}\n```",
-                    empty=True
+                    empty=True,
                 )
             else:
                 paginator.add_line(f"{icon} `{extension}`", empty=True)
@@ -100,7 +107,11 @@ class ManagementFeature(Feature):
         Logs this bot out.
         """
 
-        ellipse_character = "\N{BRAILLE PATTERN DOTS-356}" if Flags.USE_BRAILLE_J else "\N{HORIZONTAL ELLIPSIS}"
+        ellipse_character = (
+            "\N{BRAILLE PATTERN DOTS-356}"
+            if Flags.USE_BRAILLE_J
+            else "\N{HORIZONTAL ELLIPSIS}"
+        )
 
         await ctx.send(f"Logging out now{ellipse_character}")
         await ctx.bot.close()
@@ -113,7 +124,7 @@ class ManagementFeature(Feature):
         If the names of permissions are provided, they are requested as part of the invite.
         """
 
-        scopes = ('bot', 'applications.commands')
+        scopes = ("bot", "applications.commands")
         permissions = nextcord.Permissions()
 
         for perm in perms:
@@ -127,7 +138,7 @@ class ManagementFeature(Feature):
         query = {
             "client_id": application_info.id,
             "scope": "+".join(scopes),
-            "permissions": permissions.value
+            "permissions": permissions.value,
         }
 
         return await ctx.send(
@@ -152,13 +163,19 @@ class ManagementFeature(Feature):
         for _ in range(6):
             # First generate the text
             text = "Calculating round-trip time...\n\n"
-            text += "\n".join(f"Reading {index + 1}: {reading * 1000:.2f}ms" for index, reading in enumerate(api_readings))
+            text += "\n".join(
+                f"Reading {index + 1}: {reading * 1000:.2f}ms"
+                for index, reading in enumerate(api_readings)
+            )
 
             if api_readings:
                 average = sum(api_readings) / len(api_readings)
 
                 if len(api_readings) > 1:
-                    stddev = math.sqrt(sum(math.pow(reading - average, 2) for reading in api_readings) / (len(api_readings) - 1))
+                    stddev = math.sqrt(
+                        sum(math.pow(reading - average, 2) for reading in api_readings)
+                        / (len(api_readings) - 1)
+                    )
                 else:
                     stddev = 0.0
 

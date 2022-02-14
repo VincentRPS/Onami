@@ -14,11 +14,11 @@ The onami shell commands.
 from nextcord.ext import commands
 
 from onami.codeblocks import Codeblock, codeblock_converter
+from onami.cog import build, version
 from onami.exception_handling import ReplResponseReactor
 from onami.features.baseclass import Feature
 from onami.paginators import PaginatorInterface, WrappedPaginator
 from onami.shell import ShellReader
-from onami.cog import version, build
 
 
 class ShellFeature(Feature):
@@ -26,7 +26,11 @@ class ShellFeature(Feature):
     Feature containing the shell-related commands
     """
 
-    @Feature.Command(parent="oni", name="shell", aliases=["bash", "sh", "powershell", "ps1", "ps", "cmd"])
+    @Feature.Command(
+        parent="oni",
+        name="shell",
+        aliases=["bash", "sh", "powershell", "ps1", "ps", "cmd"],
+    )
     async def oni_shell(self, ctx: commands.Context, *, argument: codeblock_converter):
         """
         Executes statements in the system shell.
@@ -59,8 +63,11 @@ class ShellFeature(Feature):
         Shortcut for 'oni sh git'. Invokes the system shell.
         """
 
-        return await ctx.invoke(self.oni_shell, argument=Codeblock(argument.language, "git " + argument.content))
-    
+        return await ctx.invoke(
+            self.oni_shell,
+            argument=Codeblock(argument.language, "git " + argument.content),
+        )
+
     @Feature.Command(parent="oni", name="version")
     async def oni_version(self, ctx: commands.Context):
         """
@@ -75,4 +82,7 @@ class ShellFeature(Feature):
         Shortcut for 'oni sh pip'. Invokes the system shell.
         """
 
-        return await ctx.invoke(self.oni_shell, argument=Codeblock(argument.language, "pip " + argument.content))
+        return await ctx.invoke(
+            self.oni_shell,
+            argument=Codeblock(argument.language, "pip " + argument.content),
+        )

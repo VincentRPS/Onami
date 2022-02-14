@@ -32,7 +32,7 @@ async def _repl_coroutine({{0}}):
 """
 
 
-def wrap_code(code: str, args: str = '') -> ast.Module:
+def wrap_code(code: str, args: str = "") -> ast.Module:
     """
     Wraps code for disassembly.
 
@@ -41,8 +41,8 @@ def wrap_code(code: str, args: str = '') -> ast.Module:
     it's implemented separately here.
     """
 
-    user_code = import_expression.parse(code, mode='exec')
-    mod = import_expression.parse(CORO_CODE.format(args), mode='exec')
+    user_code = import_expression.parse(code, mode="exec")
+    mod = import_expression.parse(CORO_CODE.format(args), mode="exec")
 
     definition = mod.body[-1]  # async def ...:
     assert isinstance(definition, ast.AsyncFunctionDef)
@@ -83,25 +83,29 @@ def disassemble(code: str, scope: Scope = None, arg_dict: dict = None):
 
     scope = scope or Scope()
 
-    wrapped = wrap_code(code, args=', '.join(arg_names))
-    exec(compile(wrapped, '<repl>', 'exec'), scope.globals, scope.locals)  # pylint: disable=exec-used
+    wrapped = wrap_code(code, args=", ".join(arg_names))
+    exec(
+        compile(wrapped, "<repl>", "exec"), scope.globals, scope.locals
+    )  # pylint: disable=exec-used
 
-    func_def = scope.locals.get('_repl_coroutine') or scope.globals['_repl_coroutine']
+    func_def = scope.locals.get("_repl_coroutine") or scope.globals["_repl_coroutine"]
 
     # pylint is gonna really hate this part onwards
     # pylint: disable=protected-access, invalid-name
     co = func_def.__code__
 
     for instruction in dis._get_instructions_bytes(
-        co.co_code, co.co_varnames, co.co_names, co.co_consts,
-        co.co_cellvars + co.co_freevars, dict(dis.findlinestarts(co)),
-        line_offset=0
+        co.co_code,
+        co.co_varnames,
+        co.co_names,
+        co.co_consts,
+        co.co_cellvars + co.co_freevars,
+        dict(dis.findlinestarts(co)),
+        line_offset=0,
     ):
         if instruction.starts_line is not None and instruction.offset > 0:
-            yield ''
+            yield ""
 
-        yield instruction._disassemble(
-            4, False, 4
-        )
+        yield instruction._disassemble(4, False, 4)
 
     # pylint: enable=protected-access, invalid-name

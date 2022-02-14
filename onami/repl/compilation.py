@@ -43,15 +43,15 @@ async def _repl_coroutine({{0}}):
 """
 
 
-def wrap_code(code: str, args: str = '') -> ast.Module:
+def wrap_code(code: str, args: str = "") -> ast.Module:
     """
     Compiles Python code into an async function or generator,
     and automatically adds return if the function body is a single evaluation.
     Also adds inline import expression support.
     """
 
-    user_code = import_expression.parse(code, mode='exec')
-    mod = import_expression.parse(CORO_CODE.format(args), mode='exec')
+    user_code = import_expression.parse(code, mode="exec")
+    mod = import_expression.parse(CORO_CODE.format(args), mode="exec")
 
     definition = mod.body[-1]  # async def ...:
     assert isinstance(definition, ast.AsyncFunctionDef)
@@ -106,11 +106,17 @@ class AsyncCodeExecutor:  # pylint: disable=too-few-public-methods
         print(total)
     """
 
-    __slots__ = ('args', 'arg_names', 'code', 'loop', 'scope', 'source')
+    __slots__ = ("args", "arg_names", "code", "loop", "scope", "source")
 
-    def __init__(self, code: str, scope: Scope = None, arg_dict: dict = None, loop: asyncio.BaseEventLoop = None):
+    def __init__(
+        self,
+        code: str,
+        scope: Scope = None,
+        arg_dict: dict = None,
+        loop: asyncio.BaseEventLoop = None,
+    ):
         self.args = [self]
-        self.arg_names = ['_async_executor']
+        self.arg_names = ["_async_executor"]
 
         if arg_dict:
             for key, value in arg_dict.items():
@@ -118,13 +124,18 @@ class AsyncCodeExecutor:  # pylint: disable=too-few-public-methods
                 self.args.append(value)
 
         self.source = code
-        self.code = wrap_code(code, args=', '.join(self.arg_names))
+        self.code = wrap_code(code, args=", ".join(self.arg_names))
         self.scope = scope or Scope()
         self.loop = loop or asyncio.get_event_loop()
 
     def __aiter__(self):
-        exec(compile(self.code, '<repl>', 'exec'), self.scope.globals, self.scope.locals)  # pylint: disable=exec-used
-        func_def = self.scope.locals.get('_repl_coroutine') or self.scope.globals['_repl_coroutine']
+        exec(
+            compile(self.code, "<repl>", "exec"), self.scope.globals, self.scope.locals
+        )  # pylint: disable=exec-used
+        func_def = (
+            self.scope.locals.get("_repl_coroutine")
+            or self.scope.globals["_repl_coroutine"]
+        )
 
         return self.traverse(func_def)
 
@@ -143,11 +154,11 @@ class AsyncCodeExecutor:  # pylint: disable=too-few-public-methods
                 yield await func(*self.args)
         except Exception:  # pylint: disable=broad-except
             # Falsely populate the linecache to make the REPL line appear in tracebacks
-            linecache.cache['<repl>'] = (
+            linecache.cache["<repl>"] = (
                 len(self.source),  # Source length
                 None,  # Time modified (None bypasses expunge)
-                [line + '\n' for line in self.source.splitlines()],  # Line list
-                '<repl>'  # 'True' filename
+                [line + "\n" for line in self.source.splitlines()],  # Line list
+                "<repl>",  # 'True' filename
             )
 
             raise

@@ -34,17 +34,17 @@ from jinja2.loaders import BaseLoader
 
 ENVIRONMENT = Environment(loader=BaseLoader())
 
-with open('dist_summary.jinja2', 'r', encoding='utf-8') as fp:
+with open("dist_summary.jinja2", "r", encoding="utf-8") as fp:
     template: Template = ENVIRONMENT.from_string(fp.read())
 
-with open('dist/DIST_SUMMARY.md', 'w', encoding='utf-8') as fp:
+with open("dist/DIST_SUMMARY.md", "w", encoding="utf-8") as fp:
     output = template.render(
         env=os.getenv,
-        package=pkg_resources.get_distribution('jishaku'),
+        package=pkg_resources.get_distribution("jishaku"),
     )
 
     # Jinja loves obliterating trailing newlines
-    if not output.endswith('\n'):
-        output += '\n'
+    if not output.endswith("\n"):
+        output += "\n"
 
     fp.write(output)
