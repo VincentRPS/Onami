@@ -71,10 +71,10 @@ class ShellFeature(Feature):
     @Feature.Command(parent="oni", name="version")
     async def oni_version(self, ctx: commands.Context):
         """
-        Version Showing
+        Version showing
         """
 
-        await ctx.reply(f"Onami Version {version} and build {build}")
+        await ctx.reply(f"Onami version {version} and build {build}")
 
     @Feature.Command(parent="oni", name="pip")
     async def oni_pip(self, ctx: commands.Context, *, argument: codeblock_converter):

@@ -21,13 +21,13 @@ import nextcord
 from nextcord.ext import commands
 
 try:
-    print(f"Loading Onami V{version}")
+    print(f"Loading Onami v{version}")
 
 except:
-    print("Failed To Load Onami")
+    print("Failed to load Onami")
 
 finally:
-    print(f"Onami Has Loaded into build {build}")
+    print(f"Onami has loaded into build {build}")
 
 from onami.features.filesystem import FilesystemFeature
 from onami.features.guild import GuildFeature

@@ -2,7 +2,7 @@
 onami.features.slash_commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Slash Command Features For Onami
+Slash command features for Onami
 
 :copyright: (c) 2021-present RPS
 :license: MIT, see LICENSE for more details.
