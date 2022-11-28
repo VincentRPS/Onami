@@ -86,8 +86,6 @@ try:
                 VERSION += (
                     ("" if match else "a")
                     + COMMIT_COUNT.decode("utf-8").strip()
-                    + "+g"
-                    + COMMIT_HASH.decode("utf-8").strip()
                 )
 
                 # Also attempt to retrieve a branch, when applicable
