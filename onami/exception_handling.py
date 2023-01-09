@@ -19,6 +19,7 @@ import typing
 import nextcord
 from nextcord.ext import commands
 
+from .flags import Flags
 
 async def send_traceback(
     destination: nextcord.abc.Messageable, verbosity: int, *exc_info
