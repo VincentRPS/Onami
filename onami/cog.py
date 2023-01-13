@@ -12,16 +12,16 @@ The onami debugging and diagnostics cog implementation.
 """
 
 
-version = "1.0.0a1"
-
-build = "21"
-
-
 import nextcord
 from nextcord.ext import commands
 
+from .meta import __version__
+
+
+build = "21"
+
 try:
-    print(f"Loading Onami v{version}")
+    print(f"Loading Onami v{__version__}")
 
 except:
     print("Failed to load Onami")
