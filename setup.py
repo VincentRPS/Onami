@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+Qq#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -32,7 +32,7 @@ from setuptools import setup
 
 ROOT = pathlib.Path(__file__).parent
 
-VERSION = f'2.6.0'
+VERSION = f'2.6.1'
 
 EXTRA_REQUIRES = {}
 
