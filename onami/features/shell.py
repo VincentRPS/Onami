@@ -14,9 +14,10 @@ The onami shell commands.
 from nextcord.ext import commands
 
 from onami.codeblocks import Codeblock, codeblock_converter
-from onami.cog import build, version
+from onami.cog import build
 from onami.exception_handling import ReplResponseReactor
 from onami.features.baseclass import Feature
+from onami.meta import __version__
 from onami.paginators import PaginatorInterface, WrappedPaginator
 from onami.shell import ShellReader
 
@@ -74,7 +75,7 @@ class ShellFeature(Feature):
         Version showing
         """
 
-        await ctx.reply(f"Onami version {version} and build {build}")
+        await ctx.reply(f"Onami version {__version__} and build {build}")
 
     @Feature.Command(parent="oni", name="pip")
     async def oni_pip(self, ctx: commands.Context, *, argument: codeblock_converter):
