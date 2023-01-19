@@ -32,7 +32,7 @@ from setuptools import setup
 
 ROOT = pathlib.Path(__file__).parent
 
-VERSION = f'2.6.1'
+VERSION = f'2.6.2'
 
 EXTRA_REQUIRES = {}
 
