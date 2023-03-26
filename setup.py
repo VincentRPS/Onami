@@ -32,7 +32,7 @@ from setuptools import setup
 
 ROOT = pathlib.Path(__file__).parent
 
-VERSION = f'2.6.2'
+VERSION = f'2.6.3'
 
 EXTRA_REQUIRES = {}
 
@@ -81,6 +81,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Communications :: Chat",
         "Topic :: Internet",
         "Topic :: Software Development :: Debuggers",
